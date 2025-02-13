@@ -25,17 +25,26 @@ export const mockUsers = [
       created: '2025-02-01T10:00:00.000Z',
       started: false,
       ended: false,
-      userIds: [1, 2],
+      userIds: [1, 2], 
+      roomCode: 12345,
+      maxPlayers: 2,
+      get isFull() {
+        return this.userIds.length >= this.maxPlayers;
+      }
     },
     {
       id: 2,
       created: '2025-02-02T12:30:00.000Z',
       started: true,
       ended: false,
-      userIds: [2, 3],
+      userIds: [2, 3], 
+      roomCode: 67890, 
+      maxPlayers: 2,  
+      get isFull() {
+        return this.userIds.length >= this.maxPlayers;
+      }
     },
   ];
-  
 
   export const mockTurns = [
     {
