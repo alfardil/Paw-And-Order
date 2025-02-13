@@ -1,24 +1,527 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Manrope:wght@200..800&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #ffffff;
+}
+
+* {
+  color: white !important;
+}
+
+.splash-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  position: relative;
+}
+
+.splash-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 2rem;
+}
+
+.logo-container {
+  position: relative;
   padding: 2rem;
+}
+
+.logo-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Logo and text styling */
+.logo-container svg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 1rem;
+}
+
+.logo-text {
+  color: white;
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  font-family: "Chakra Petch", "Arial", "Verdana", sans-serif;
+}
+
+.games-text {
+  color: white;
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+/* Warning text at bottom */
+.warning-text {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  width: 100%;
+  color: white;
+  font-size: 0.75rem;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: monospace;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.warning-icon {
+  color: #ffd700;
+  font-size: 1rem;
+}
+
+/* Playroom branding */
+.powered-by {
+  position: absolute;
+  bottom: 3rem;
+  transform: translateX(-50%);
+  text-align: center;
+  color: white;
+}
+
+.playroom-logo {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+/* Fade-in animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo-container,
+.powered-by,
+.warning-text {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+:root {
+  --primary-bg: #e6e6f2;
+  --card-bg: rgba(255, 255, 255, 0.15);
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --accent-purple: #9747ff;
+  --button-hover: rgba(255, 255, 255, 0.2);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: black;
+  font-family: "Chakra Petch", monospace;
+}
+
+.game-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #0a0a0f;
+}
+
+.game-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+      rgba(151, 71, 255, 0.1) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(151, 71, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  transform: perspective(500px) rotateX(60deg);
+  animation: gridMove 20s linear infinite;
+}
+
+.bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(151, 71, 255, 0.15) 0%,
+    rgba(10, 10, 15, 0.9) 60%
+  );
+}
+
+/* Logo */
+.game-logo {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.logo-badge {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 1rem;
+  color: var(--accent-purple);
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+/* Card */
+.game-card {
+  position: relative;
+  z-index: 1;
+  background: rgba(15, 15, 20, 0.95);
+  border: 1px solid rgba(151, 71, 255, 0.3);
+  border-radius: 4px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.menu-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-button::after {
+  content: "";
+  position: absolute;
+  top: var(--y, 50%);
+  left: var(--x, 50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+}
+
+/* Buttons */
+.menu-button {
+  position: relative;
+  width: 100%;
+  border: 1.5px dashed rgba(151, 71, 255, 0.3);
+  border-radius: 2px;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  padding: 10px 15px; /* Add space inside the button */
+}
+
+.button-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.25rem;
+  background: rgba(151, 71, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.button-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--x, 50%) var(--y, 50%),
+    rgba(151, 71, 255, 0.4) 0%,
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.menu-button:hover .button-glow {
+  opacity: 1;
+}
+
+.menu-button.primary {
+  border-color: var(--accent-purple);
+}
+
+.menu-button.primary .button-content {
+  background: var(--accent-purple);
+}
+
+/* Animations */
+@keyframes gridMove {
+  from {
+    transform: perspective(500px) rotateX(60deg) translateY(0);
+  }
+  to {
+    transform: perspective(500px) rotateX(60deg) translateY(20px);
+  }
+}
+
+@keyframes badgePulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* Add hover effect to track mouse position */
+.menu-button {
+  --x: 50%;
+  --y: 50%;
+}
+
+/* Logo Styles */
+.game-logo h1 {
+  font-family: "Press Start 2P", cursive;
+  font-size: 3.5rem;
+  margin: 0;
+  background: linear-gradient(to bottom, #ffd700 0%, #ff9100 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  letter-spacing: 4px;
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.highlight {
+  color: var(--accent-purple);
+  font-family: "Chakra Petch", monospace;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+.version {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: #888;
+  margin-left: 1rem;
+}
+
+.court-line {
+  position: relative;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  letter-spacing: 4px;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  overflow: hidden;
+  color: white;
+
+  /* Soft initial glow */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.4),
+    0 0 10px rgba(151, 71, 255, 0.5), 0 0 20px rgba(151, 71, 255, 0.7);
+
+  /* Cool pulsating border effect */
+  border-top: 2px solid rgba(151, 71, 255, 0.4);
+  border-bottom: 2px solid rgba(151, 71, 255, 0.4);
+  animation: neonPulse 2.5s infinite alternate;
+}
+
+/* Pulse Animation */
+@keyframes neonPulse {
+  0% {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.4),
+      0 0 10px rgba(151, 71, 255, 0.5), 0 0 20px rgba(151, 71, 255, 0.7);
+    border-top: 2px solid rgba(151, 71, 255, 0.4);
+    border-bottom: 2px solid rgba(151, 71, 255, 0.4);
+  }
+  100% {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6),
+      0 0 15px rgba(151, 71, 255, 0.8), 0 0 30px rgba(151, 71, 255, 1);
+    border-top: 2px solid rgba(151, 71, 255, 0.8);
+    border-bottom: 2px solid rgba(151, 71, 255, 0.8);
+  }
+}
+
+/* Card Styles */
+.card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.menu-title {
+  color: var(--accent-purple);
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.menu-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.divider-line {
+  height: 1px;
+  width: 80px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--accent-purple),
+    transparent
+  );
+}
+
+.divider-diamond {
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-purple);
+  transform: rotate(45deg);
+}
+
+/* Menu Options */
+.menu-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 260px;
+  margin: 0 auto;
+}
+
+.button-diamond {
+  width: 6px;
+  height: 6px;
+  background-color: currentColor;
+  transform: rotate(45deg);
+  opacity: 0.8;
+}
+
+.button-text {
+  flex: 1;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Card Decorations */
+.card-decoration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
-@keyframes logo-spin {
+.decoration-line {
+  height: 2px;
+  flex: 1;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--accent-purple),
+    transparent
+  );
+}
+
+.decoration-seal {
+  font-size: 2rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Footer */
+.footer {
+  position: absolute;
+  bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.footer-link {
+  color: #888;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-family: "Chakra Petch", monospace;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--accent-purple);
+}
+
+.footer-separator {
+  color: #444;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--accent-purple);
+  }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #9747ff, 0 0 40px var(--accent-purple);
+  }
+}
+
+@keyframes rotate {
   from {
     transform: rotate(0deg);
   }
@@ -27,16 +530,468 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* Character */
+.character {
+  width: 200px;
+  height: 200px;
+  margin: 2rem 0;
+}
+
+/* Speech Bubble */
+.speech-bubble {
+  position: relative;
+  background: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 1rem;
+  max-width: 300px;
+}
+
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .game-logo h1 {
+    font-size: 2rem;
+  }
+
+  .logo-badge {
+    width: 48px;
+    height: 48px;
+  }
+
+  .card-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .game-card {
+    padding: 1.5rem;
+    margin: 0 1rem;
+  }
+
+  .character {
+    width: 150px;
+    height: 150px;
+  }
+
+  .menu-button {
+    padding: 0.75rem 1rem;
+    font-size: 0.65rem;
+  }
+
+  .button-icon {
+    font-size: 0.9rem;
   }
 }
 
-.card {
-  padding: 2em;
+/* Room Page Styles */
+.room-card {
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
 }
 
-.read-the-docs {
+.room-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.status-display {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.status-item {
+  text-align: center;
+}
+
+.status-label {
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.6rem;
+  color: var(--accent-purple);
+  margin-bottom: 0.5rem;
+}
+
+.status-value {
+  font-family: "Chakra Petch", monospace;
+  font-size: 2rem;
+  color: white;
+  text-shadow: 0 0 10px rgba(151, 71, 255, 0.5);
+}
+
+.status-message {
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.7rem;
   color: #888;
+  margin-bottom: 1rem;
+}
+
+.loading-dots {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.loading-dots span {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-purple);
+  border-radius: 50%;
+  animation: loadingDots 1.4s infinite ease-in-out;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.loading-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.joke-box {
+  background: rgba(151, 71, 255, 0.1);
+  border: 1px solid rgba(151, 71, 255, 0.2);
+  border-radius: 4px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.joke-title {
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.6rem;
+  color: var(--accent-purple);
+  margin-bottom: 0.75rem;
+}
+
+.joke-content {
+  font-family: "Chakra Petch", monospace;
+  font-size: 0.9rem;
+  color: #fff;
+  line-height: 1.4;
+}
+
+.countdown-section {
+  text-align: center;
+}
+
+.countdown-display {
+  font-family: "Press Start 2P", cursive;
+  font-size: 3rem;
+  color: var(--accent-purple);
+  animation: countdownPulse 1s infinite;
+}
+
+.prompt-section {
+  border-top: 1px solid rgba(151, 71, 255, 0.2);
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+}
+
+.prompt-title {
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.6rem;
+  color: var(--accent-purple);
+  margin-bottom: 0.75rem;
+}
+
+.prompt-content {
+  font-family: "Chakra Petch", monospace;
+  font-size: 0.9rem;
+  color: #fff;
+  line-height: 1.4;
+}
+
+.error-message {
+  color: #ff4444;
+  font-family: "Chakra Petch", monospace;
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid rgba(255, 68, 68, 0.3);
+  border-radius: 4px;
+}
+
+.loading-message {
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.7rem;
+  color: #888;
+  text-align: center;
+}
+
+@keyframes loadingDots {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+@keyframes countdownPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* Join Room Styles */
+.join-card {
+  min-height: 300px;
+}
+
+.join-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+}
+
+.court-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid rgba(151, 71, 255, 0.3);
+  color: white;
+  font-family: "Press Start 2P", cursive;
+  font-size: 1.5rem;
+  text-align: center;
+  letter-spacing: 8px;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
+}
+
+.court-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 4px;
+}
+
+.court-input:focus {
+  outline: none;
+  border-bottom-color: var(--accent-purple);
+}
+
+.input-line {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--accent-purple);
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+
+.court-input:focus + .input-line {
+  width: 100%;
+}
+
+/* Glowing effect on input focus */
+.court-input:focus {
+  text-shadow: 0 0 8px rgba(151, 71, 255, 0.5);
+}
+
+/* Error message animation */
+.error-message {
+  animation: errorShake 0.5s ease-in-out;
+}
+
+@keyframes errorShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .court-input {
+    font-size: 1.2rem;
+    letter-spacing: 6px;
+  }
+
+  .join-card {
+    min-height: 250px;
+  }
+}
+
+/* Judge Introduction Styles */
+.judge-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.judge-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 4px solid var(--accent-purple);
+  box-shadow: 0 0 20px rgba(151, 71, 255, 0.3);
+}
+
+.judge-speech {
+  background: rgba(151, 71, 255, 0.1);
+  border: 1px solid rgba(151, 71, 255, 0.3);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.debate-question {
+  font-family: "Press Start 2P", cursive;
+  font-size: 1.2rem;
+  color: var(--accent-purple);
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border: 2px dashed rgba(151, 71, 255, 0.5);
+  border-radius: 4px;
+}
+
+/* Results Styles */
+.results-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.judge-feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.judge-image.small {
+  width: 80px;
+  height: 80px;
+}
+
+.feedback-bubble {
+  background: rgba(151, 71, 255, 0.1);
+  border: 1px solid rgba(151, 71, 255, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  flex: 1;
+}
+
+.score-display {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(151, 71, 255, 0.05);
+  border-radius: 8px;
+}
+
+.score-label {
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.8rem;
+  color: var(--accent-purple);
+  margin-bottom: 0.5rem;
+}
+
+.score-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--accent-purple);
+}
+
+.mvp-moment {
+  border-top: 1px solid rgba(151, 71, 255, 0.2);
+  padding-top: 1rem;
+}
+
+.mvp-title {
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.8rem;
+  color: var(--accent-purple);
+  margin-bottom: 0.5rem;
+}
+
+.mvp-content {
+  font-style: italic;
+  color: #fff;
+  line-height: 1.4;
+}
+
+/* Add these styles to your existing CSS */
+.phase-indicator {
+  font-size: 1.2em;
+  color: #9d4eff;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.opponent-response {
+  background: rgba(157, 78, 255, 0.1);
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.response-title {
+  color: #9d4eff;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.position-indicator {
+  color: #9d4eff;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.winner-announcement {
+  font-size: 1.5em;
+  color: #9d4eff;
+  text-align: center;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.mvp-moment {
+  background: rgba(157, 78, 255, 0.1);
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.mvp-title {
+  color: #9d4eff;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
