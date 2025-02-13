@@ -1,12 +1,35 @@
 import { useState } from "react";
 import { mockParties } from "../mockData";
 import "../App.css";
+import { Link } from "react-router-dom";
 
 function JoinCourtPage() {
   const [joinCode, setJoinCode] = useState("");
 
   return (
     <div className="game-container">
+      <Link to="/">
+        <div
+          className="back-button"
+          style={{
+            position: "absolute",
+            top: "10px",
+            left: "10px",
+            zIndex: 1000,
+          }}
+        >
+          <button
+            className="menu-button"
+            style={{
+              fontSize: "1.5em",
+              padding: "12px 24px",
+              borderRadius: "8px",
+            }}
+          >
+            Back
+          </button>
+        </div>
+      </Link>
       <div className="game-background">
         <div className="bg-grid"></div>
         <div className="bg-overlay"></div>

@@ -51,7 +51,6 @@ function ChooseRoom() {
             <div className="button-glow"></div>
           </button>
 
-          {/* This button will navigate to /join when clicked */}
           <button
             className="menu-button secondary"
             onClick={() => navigate("/join")}
