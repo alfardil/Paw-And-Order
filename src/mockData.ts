@@ -22,6 +22,7 @@ export const mockUsers = [
   export const mockParties = [
     {
       id: 1,
+      name: 'Alice and Bob',
       created: '2025-02-01T10:00:00.000Z',
       started: false,
       ended: false,
@@ -34,10 +35,11 @@ export const mockUsers = [
     },
     {
       id: 2,
+      name: 'Bob',
       created: '2025-02-02T12:30:00.000Z',
       started: true,
       ended: false,
-      userIds: [2, 3], 
+      userIds: [3], 
       roomCode: 67890, 
       maxPlayers: 2,  
       get isFull() {

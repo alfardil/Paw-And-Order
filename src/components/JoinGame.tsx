@@ -1,7 +1,10 @@
-import "../App.css";
+import { useState } from "react";
 import { mockParties } from "../mockData";
+import "../App.css";
 
 function JoinCourtPage() {
+  const [joinCode, setJoinCode] = useState("");
+
   return (
     <div className="game-container">
       <div className="game-background">
@@ -12,6 +15,16 @@ function JoinCourtPage() {
       <div className="game-card join-card">
         <div className="card-header">
           <h2 className="menu-title">Join a Court</h2>
+          <div className="input-container">
+            <input
+              type="text"
+              value={joinCode}
+              onChange={(e) => setJoinCode(e.target.value)}
+              className="court-input"
+              placeholder="XXXXX"
+              maxLength={5}
+            />
+          </div>
           <div className="menu-divider">
             <div className="divider-line"></div>
             <div className="divider-diamond"></div>
@@ -21,8 +34,6 @@ function JoinCourtPage() {
 
         <div className="join-content">
           {mockParties.map((party) => {
-            const formattedDate = new Date(party.created).toLocaleString();
-
             return (
               <button
                 key={party.id}
@@ -31,9 +42,7 @@ function JoinCourtPage() {
               >
                 <div className="button-glow"></div>
                 <div className="button-content">
-                  <span className="button-text">
-                    Party #{party.id} (Created: {formattedDate})
-                  </span>
+                  <span className="button-text">{party.name}</span>
                 </div>
               </button>
             );
