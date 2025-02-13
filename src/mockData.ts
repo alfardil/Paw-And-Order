@@ -15,7 +15,7 @@ export const mockUsers = [
       userId: 3,
       uuid: '65dc8ff8-bafe-4bba-8536-364fbdb5bdb3',
       name: 'Charlie',
-      authProvider: 'local',
+      authProvider: 'discord',
     },
   ];
 
@@ -35,9 +35,9 @@ export const mockUsers = [
     },
     {
       id: 2,
-      name: 'Bob',
+      name: 'Charlie',
       created: '2025-02-02T12:30:00.000Z',
-      started: true,
+      started: false,
       ended: false,
       userIds: [3], 
       roomCode: 67890, 

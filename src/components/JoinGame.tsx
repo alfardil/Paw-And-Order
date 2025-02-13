@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { mockParties } from "../mockData";
 import "../App.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function JoinCourtPage() {
   const [joinCode, setJoinCode] = useState("");
+  const navigate = useNavigate();
 
   return (
     <div className="game-container">
@@ -48,6 +49,13 @@ function JoinCourtPage() {
               maxLength={5}
             />
           </div>
+          <button className="menu-button primary">
+            <div className="button-content">
+              <div className="button-diamond"></div>
+              <span className="button-text">ENTER COURT</span>
+            </div>
+            <div className="button-glow"></div>
+          </button>
           <div className="menu-divider">
             <div className="divider-line"></div>
             <div className="divider-diamond"></div>
@@ -56,20 +64,23 @@ function JoinCourtPage() {
         </div>
 
         <div className="join-content">
-          {mockParties.map((party) => {
-            return (
-              <button
-                key={party.id}
-                className="menu-button"
-                onClick={() => console.log(`Joining party #${party.id}...`)}
-              >
-                <div className="button-glow"></div>
-                <div className="button-content">
-                  <span className="button-text">{party.name}</span>
-                </div>
-              </button>
-            );
-          })}
+          Available Rooms:
+          {mockParties
+            .filter((party) => !party.isFull && !party.started)
+            .map((party) => {
+              return (
+                <button
+                  key={party.id}
+                  className="menu-button"
+                  onClick={() => navigate(`/room/${party.id}`)}
+                >
+                  <div className="button-glow"></div>
+                  <div className="button-content">
+                    <span className="button-text">{party.name}</span>
+                  </div>
+                </button>
+              );
+            })}
         </div>
       </div>
     </div>
