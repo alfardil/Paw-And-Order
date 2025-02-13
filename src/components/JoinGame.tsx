@@ -5,7 +5,32 @@ import { Link, useNavigate } from "react-router-dom";
 
 function JoinCourtPage() {
   const [joinCode, setJoinCode] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const handleJoin = () => {
+    setError("");
+
+    const roomCode = parseInt(joinCode, 10);
+    if (isNaN(roomCode)) {
+      setError("Invalid court code");
+      return;
+    }
+
+    const matchingParty = mockParties.find(
+      (party) => party.roomCode === roomCode
+    );
+
+    if (matchingParty) {
+      if (!matchingParty.isFull && !matchingParty.started) {
+        navigate(`/room/${matchingParty.id}`);
+      } else {
+        setError("Court is full or already started");
+      }
+    } else {
+      setError("Court not found");
+    }
+  };
 
   return (
     <div className="game-container">
@@ -49,13 +74,14 @@ function JoinCourtPage() {
               maxLength={5}
             />
           </div>
-          <button className="menu-button primary">
+          <button className="menu-button primary" onClick={handleJoin}>
             <div className="button-content">
               <div className="button-diamond"></div>
               <span className="button-text">ENTER COURT</span>
             </div>
             <div className="button-glow"></div>
           </button>
+          {error && <p style={{ color: "red" }}></p>}
           <div className="menu-divider">
             <div className="divider-line"></div>
             <div className="divider-diamond"></div>
