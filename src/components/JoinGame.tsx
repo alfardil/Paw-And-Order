@@ -81,7 +81,7 @@ function JoinCourtPage() {
             </div>
             <div className="button-glow"></div>
           </button>
-          {error && <p style={{ color: "red" }}></p>}
+          {error}
           <div className="menu-divider">
             <div className="divider-line"></div>
             <div className="divider-diamond"></div>
