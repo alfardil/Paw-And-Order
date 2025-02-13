@@ -155,7 +155,7 @@ body {
   box-sizing: border-box;
   overflow: hidden;
   background: #0a0a0f;
-  width: 100vw !important;
+  width: 100vw;
 }
 
 .game-background {
