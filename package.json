@@ -1,0 +1,17 @@
+{
+  "name": "paw",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "client:dev": "cd frontend && pnpm run dev",
+    "server:dev": "cd server && pnpm run dev",
+    "dev": "concurrently \"pnpm run client:dev\" \"pnpm run server:dev\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
