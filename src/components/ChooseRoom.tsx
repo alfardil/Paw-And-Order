@@ -42,7 +42,7 @@ function ChooseRoom() {
         <div className="menu-options">
           <button
             className="menu-button primary"
-            // onClick={() => onSelect("create")}
+            onClick={() => navigate("/create")}
           >
             <div className="button-content">
               <div className="button-diamond"></div>

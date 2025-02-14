@@ -3,7 +3,7 @@ import { mockParties } from "../mockData";
 import "../App.css";
 import { Link, useNavigate } from "react-router-dom";
 
-function JoinCourtPage() {
+function JoinGame() {
   const [joinCode, setJoinCode] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -113,4 +113,4 @@ function JoinCourtPage() {
   );
 }
 
-export default JoinCourtPage;
+export default JoinGame;
