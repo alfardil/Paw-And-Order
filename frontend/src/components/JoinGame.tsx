@@ -1,17 +1,42 @@
 import { useState } from "react";
-import { mockParties } from "../mockData";
-import "../App.css";
+import { mockParties, mockUsers, currentUser } from "../mockData";
 import { Link, useNavigate } from "react-router-dom";
+import "../App.css";
 
 function JoinGame() {
   const [joinCode, setJoinCode] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const handleJoinParty = (partyId: number) => {
+    setError("");
+    const matchingParty = mockParties.find((party) => party.id === partyId);
+
+    if (!matchingParty) {
+      setError("Court not found");
+      return;
+    }
+
+    if (matchingParty.isFull) {
+      setError("Court is full");
+      return;
+    }
+    if (matchingParty.started) {
+      setError("Court is already started");
+      return;
+    }
+
+    if (!matchingParty.userIds.includes(currentUser.userId)) {
+      matchingParty.userIds.push(currentUser.userId);
+    }
+
+    navigate(`/room/${matchingParty.id}`);
+  };
+
   const handleJoin = () => {
     setError("");
-
     const roomCode = parseInt(joinCode, 10);
+
     if (isNaN(roomCode)) {
       setError("Invalid court code");
       return;
@@ -21,15 +46,11 @@ function JoinGame() {
       (party) => party.roomCode === roomCode
     );
 
-    if (matchingParty) {
-      if (!matchingParty.isFull && !matchingParty.started) {
-        navigate(`/room/${matchingParty.id}`);
-      } else {
-        setError("Court is full or already started");
-      }
-    } else {
+    if (!matchingParty) {
       setError("Court not found");
+      return;
     }
+    handleJoinParty(matchingParty.id);
   };
 
   return (
@@ -98,7 +119,7 @@ function JoinGame() {
                 <button
                   key={party.id}
                   className="menu-button"
-                  onClick={() => navigate(`/room/${party.id}`)}
+                  onClick={() => handleJoinParty(party.id)}
                 >
                   <div className="button-glow"></div>
                   <div className="button-content">

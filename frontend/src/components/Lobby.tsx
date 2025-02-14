@@ -60,6 +60,7 @@ function Lobby() {
         </div>
       </Link>
       <div className="game-card room-details-card">
+        <h1>{party.roomCode}</h1>
         <h2>{party.name || `Court #${party.id}`}</h2>
         <h3>Users in this room:</h3>
         <ul>
