@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Party, mockParties, currentUser } from "../mockData";
 
 function CreateGame() {
@@ -52,6 +52,28 @@ function CreateGame() {
 
   return (
     <div className="game-container">
+      <Link to="/">
+        <div
+          className="back-button"
+          style={{
+            position: "absolute",
+            top: "10px",
+            left: "10px",
+            zIndex: 1000,
+          }}
+        >
+          <button
+            className="menu-button"
+            style={{
+              fontSize: "1.5em",
+              padding: "12px 24px",
+              borderRadius: "8px",
+            }}
+          >
+            Back
+          </button>
+        </div>
+      </Link>
       <div className="game-card">
         <div className="card-header">
           <h2 className="menu-title">CREATE GAME</h2>

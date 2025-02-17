@@ -4,6 +4,7 @@ import JoinGame from "./components/JoinGame";
 import Lobby from "./components/Lobby";
 import CreateGame from "./components/CreateGame";
 import PlayGame from "./components/PlayGame";
+import NotFound from "./components/NotFound";
 
 function AppRoutes() {
   return (
@@ -13,6 +14,7 @@ function AppRoutes() {
       <Route path="/create" element={<CreateGame />} />
       <Route path="/game/:partyId" element={<PlayGame />} />
       <Route path="/room/:joinedPartyId" element={<Lobby />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
