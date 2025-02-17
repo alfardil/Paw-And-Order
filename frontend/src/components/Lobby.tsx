@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { mockParties, mockUsers } from "../mockData";
 import "../App.css";
+import StartGame from "./StartGame";
 
 interface ParamTypes {
   [key: string]: string | undefined;
@@ -61,7 +62,8 @@ function Lobby() {
       </Link>
       <div className="game-card room-details-card">
         <h1>{party.roomCode}</h1>
-        <h2>{party.name || `Court #${party.id}`}</h2>
+        <h2>{party.name}</h2>
+        <h2>Prompt: {party.prompt}</h2>
         <h3>Users in this room:</h3>
         <ul>
           {usersInRoom.map((user) => (
@@ -70,6 +72,7 @@ function Lobby() {
             </li>
           ))}
         </ul>
+        <StartGame playerCount={usersInRoom.length} />
       </div>
     </div>
   );

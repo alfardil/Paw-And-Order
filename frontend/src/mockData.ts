@@ -8,6 +8,7 @@ export interface User {
 export interface Party {
   id: number;
   name: string;
+  prompt: string;
   created: string;
   started: boolean;
   ended: boolean;
@@ -71,7 +72,8 @@ export const currentUser: User = {
 export const mockParties: Party[] = [
   {
     id: 1,
-    name: "Alice and Bob",
+    name: "Alice and Bob's Party",
+    prompt: "Is pineapple on pizza acceptable?",
     created: "2025-02-01T10:00:00.000Z",
     started: false,
     ended: false,
@@ -84,7 +86,8 @@ export const mockParties: Party[] = [
   },
   {
     id: 2,
-    name: "Charlie",
+    name: "Charlie's Room",
+    prompt: "Should schools ban candy?",
     created: "2025-02-02T12:30:00.000Z",
     started: false,
     ended: false,

@@ -4,6 +4,7 @@ import { Party, mockParties, currentUser } from "../mockData";
 
 function CreateGame() {
   const [prompt, setPrompt] = useState("");
+  const [courtName, setCourtName] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -11,8 +12,12 @@ function CreateGame() {
     setPrompt(e.target.value);
   };
 
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCourtName(e.target.value);
+  };
+
   const handleGeneratePrompt = () => {
-    // TO DO: actually implement the AI stuff later! :D
+    // TODO: actually implement the AI stuff later! :D
     setPrompt("Should we close down schools?");
   };
 
@@ -28,7 +33,8 @@ function CreateGame() {
 
     const newParty: Party = {
       id: newPartyId,
-      name: prompt,
+      name: courtName,
+      prompt: prompt,
       created: new Date().toISOString(),
       started: false,
       ended: false,
@@ -57,6 +63,19 @@ function CreateGame() {
         </div>
 
         <div className="menu-options">
+          <div className="input-label">
+            <input
+              className="court-input"
+              placeholder="Enter Court Name"
+              value={courtName}
+              onChange={handleNameChange}
+              maxLength={20}
+              style={{
+                fontSize: "10px",
+                width: "100%",
+              }}
+            />
+          </div>
           <div className="input-container">
             <textarea
               className="court-input"

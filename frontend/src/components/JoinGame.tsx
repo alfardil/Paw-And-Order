@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { mockParties, mockUsers, currentUser } from "../mockData";
+import { mockParties, currentUser } from "../mockData";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 
