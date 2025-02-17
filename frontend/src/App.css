@@ -949,7 +949,32 @@ body {
   line-height: 1.4;
 }
 
-/* Add these styles to your existing CSS */
+.player-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 80%;
+  max-width: 1000px;
+  margin: 2rem auto;
+}
+
+.player-box {
+  flex: 1;
+  margin: 0 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(151, 71, 255, 0.3);
+  border-radius: 4px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+}
+
+.player-box.active {
+  border-color: gold;
+  background-color: rgba(255, 215, 0, 0.2);
+  font-weight: bold;
+}
+
 .phase-indicator {
   font-size: 1.2em;
   color: #9d4eff;

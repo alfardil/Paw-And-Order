@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Party } from "../mockData";
 
 interface StartGameProps {
-  playerCount: number;
+  party: Party;
 }
 
-const StartGame = ({ playerCount }: StartGameProps) => {
+const StartGame = ({ party }: StartGameProps) => {
   const [countdown, setCountdown] = useState<number | null>(null);
   const navigate = useNavigate();
+  const playerCount = party.userIds.length;
 
   const handleStartGame = () => {
-    navigate("/game");
+    navigate(`/game/${party.id}`, { state: { party } });
   };
 
   useEffect(() => {
@@ -22,19 +24,15 @@ const StartGame = ({ playerCount }: StartGameProps) => {
   }, [playerCount]);
 
   useEffect(() => {
-    if (countdown === null || countdown <= 0) return;
+    if (countdown === 0) {
+      handleStartGame();
+    }
 
     const timer = setTimeout(() => {
       setCountdown((prev) => (prev ? prev - 1 : prev));
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [countdown]);
-
-  useEffect(() => {
-    if (countdown === 0) {
-      handleStartGame();
-    }
   }, [countdown]);
 
   if (playerCount < 2) {

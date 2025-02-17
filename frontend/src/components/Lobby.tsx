@@ -5,13 +5,13 @@ import StartGame from "./StartGame";
 
 interface ParamTypes {
   [key: string]: string | undefined;
-  roomId: string;
+  joinedPartyId: string;
 }
 
 function Lobby() {
-  const { roomId } = useParams<ParamTypes>();
+  const { joinedPartyId: joinedPartyId } = useParams<ParamTypes>();
 
-  if (!roomId) {
+  if (!joinedPartyId) {
     return (
       <div className="game-container">
         <h2>Room ID is missing</h2>
@@ -20,7 +20,8 @@ function Lobby() {
     );
   }
 
-  const party = mockParties.find((p) => p.id === parseInt(roomId, 10));
+  const partyId = parseInt(joinedPartyId, 10);
+  const party = mockParties.find((p) => p.id === partyId);
 
   if (!party) {
     return (
@@ -34,7 +35,6 @@ function Lobby() {
   const usersInRoom = mockUsers.filter((user) =>
     party.userIds.includes(user.userId)
   );
-  console.log(usersInRoom);
 
   return (
     <div className="game-container">
@@ -72,7 +72,7 @@ function Lobby() {
             </li>
           ))}
         </ul>
-        <StartGame playerCount={usersInRoom.length} />
+        <StartGame party={party} />
       </div>
     </div>
   );
