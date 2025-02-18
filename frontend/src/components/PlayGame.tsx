@@ -104,7 +104,7 @@ function PlayGame() {
               console.error("Error restarting recognition:", err);
             }
           }
-        }, 200); // debounce
+        }, 500); // debounce
       }
     };
 
