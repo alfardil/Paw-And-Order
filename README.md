@@ -1,10 +1,12 @@
 # 🛠 Paw And Order: The Virtual Debate Game
 
-Welcome to **Paw And Order!** 🎉 This **kid-friendly** game is designed to be both **fun** and **educational**, set in a **virtual courthouse**. Players engage in a **debate room**, receive a **randomly assigned stance**, and participate in a **one-minute debate round**.
+Welcome to **Paw And Order!**
+
+🎉 This **kid-friendly** game is designed to be both **fun** and **educational**, set in a **virtual courthouse**. Players engage in a **debate room**, receive a **randomly assigned stance**, and participate in a **one-minute debate round**.
 
 By presenting their arguments, users **refine their reasoning skills**, and the winner is determined based on **argument strength and quality**.
 
-🏆 **Winner at Hack@Brown 2025!** 🎉
+🏆 **Winner at Hack@Brown 2025!** 🏆
 
 ---
 
