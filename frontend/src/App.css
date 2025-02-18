@@ -700,6 +700,7 @@ body {
   border-top: 1px solid rgba(151, 71, 255, 0.2);
   padding-top: 1.5rem;
   margin-top: 1rem;
+  z-index: 1;
 }
 
 .prompt-title {
@@ -932,15 +933,16 @@ body {
 }
 
 .mvp-moment {
-  border-top: 1px solid rgba(151, 71, 255, 0.2);
-  padding-top: 1rem;
+  background: rgba(157, 78, 255, 0.1);
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
 }
 
 .mvp-title {
-  font-family: "Press Start 2P", cursive;
-  font-size: 0.8rem;
-  color: var(--accent-purple);
-  margin-bottom: 0.5rem;
+  color: #9d4eff;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .mvp-content {
@@ -980,6 +982,7 @@ body {
   color: #9d4eff;
   margin: 10px 0;
   text-align: center;
+  z-index: 1;
 }
 
 .opponent-response {
@@ -1036,12 +1039,36 @@ body {
   position: relative;
 }
 
+.transcription-container {
+  z-index: 100;
+}
+
+.microphone-button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent-purple);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 1rem auto;
+  display: block;
+  z-index: 100;
+}
+
+.microphone-button:hover {
+  background: #7c3aed;
+  box-shadow: 0 0 10px rgba(151, 71, 255, 0.7);
+}
+
 .not-found-title {
   font-size: 6rem;
   font-weight: 800;
   font-family: "Press Start 2P", cursive;
   background: linear-gradient(to right, #ff4444, #ff9100);
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 10px rgba(255, 68, 68, 0.8);
   animation: glow 1.5s infinite alternate;

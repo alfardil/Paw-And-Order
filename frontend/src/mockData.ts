@@ -15,7 +15,7 @@ export interface Party {
   userIds: number[];
   roomCode: number;
   maxPlayers: number;
-  readonly isFull: boolean;
+  isFull: boolean;
 }
 
 export interface Turn {
