@@ -1,4 +1,5 @@
 import { Router } from "express";
+import {getUserWithId } from "@/lib/db";
 
 export const apiRouter = Router();
 
@@ -13,3 +14,13 @@ apiRouter.get("", (_, res) => {
 // apiRouter.use("/game". gameRouter);
 // ```
 //
+
+// Route to fetch all users
+apiRouter.get("/users", async (_, res) => {
+  try {
+    const user = await getUserWithId({ id: "1" });
+    res.json({ data: user, status: true, message: "Fetched all users" });
+  } catch (error) {
+    res.status(500).json({ status: false, message: "Failed to fetch users", error });
+  }
+});

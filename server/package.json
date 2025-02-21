@@ -6,21 +6,32 @@
   "scripts": {
     "dev": "tsx --watch src/index.ts",
     "start": "tsx src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:gen": "prisma generate",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:pull": "prisma db pull",
+    "postinstall": "prisma db push && prisma generate"
+
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/adapter-pg": "^6.4.1",
+    "@prisma/client": "^6.4.1",
     "@types/dotenv": "^8.2.3",
     "@types/express": "^5.0.0",
     "@types/morgan": "^1.9.9",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "pg": "^8.13.3"
   },
   "devDependencies": {
-    "@types/cookie-parser": "^1.4.8"
+    "@types/cookie-parser": "^1.4.8",
+    "prisma": "^6.4.1"
   }
 }
