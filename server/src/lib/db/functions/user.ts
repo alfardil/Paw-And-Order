@@ -1,30 +1,36 @@
 import { db } from "..";
 
 export const getUserWithId = async ({
-  id,
+  uuid,
 }: {
-  id: string;
+  uuid: string;
 }) => {
   return await db.user.findUnique({
-    where: { id },
+    where: { uuid },
   });
 };
 
 export const createUser = async ({
-  id,
+  uuid,
+  joinedAt,
   email,
   name,
+  authProvider,
 }: {
-  id: string;
+  uuid: string;
+  joinedAt: Date;
   email: string;
   name: string;
+  authProvider: string;
 }) => {
   try {
     return await db.user.create({
       data: {
-        id,
+        uuid,
+        joinedAt,
         email,
         name,
+        authProvider,
       },
     });
   } catch {

@@ -13,7 +13,6 @@
     "db:migrate": "prisma migrate dev",
     "db:pull": "prisma db pull",
     "postinstall": "prisma db push && prisma generate"
-
   },
   "keywords": [],
   "author": "",
@@ -28,7 +27,8 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "morgan": "^1.10.0",
-    "pg": "^8.13.3"
+    "pg": "^8.13.3",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.8",
