@@ -22,6 +22,7 @@ Backend:
 ![Express](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-%23412991?logo=openai&logoColor=white)
 
 Infrastructure:
 ![DigitalOcean](https://img.shields.io/badge/DigitalOcean-0080FF?style=for-the-badge&logo=digitalocean&logoColor=white)
@@ -29,6 +30,7 @@ Infrastructure:
 Development Tools:
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+![DBeaver](https://img.shields.io/badge/dbeaver-382923?style=for-the-badge&logo=dbeaver&logoColor=white)
 
 ---
 
@@ -66,11 +68,11 @@ Paw And Order is designed to create an **interactive learning environment** wher
 
 This project was created by:
 
-- **ABDUL MENDAHAWI**
-- **ALFARDIL ALAM**
-- **HESHAM ZIA**
-- **MAHEEN RASSELL**
-- **TAHMID AHMED**
+- [**ABDUL MENDAHAWI**](https://github.com/amendahawi)
+- [**ALFARDIL ALAM**](https://github.com/alfardil)
+- [**HESHAM ZIA**](https://github.com/CptnHZ)
+- [**MAHEEN RASSELL**](https://github.com/mrassell)
+- [**TAHMID AHMED**](https://github.com/tahminator)
 
 Special thanks to everyone who contributed to making this project a success! 🎉
 
@@ -78,27 +80,9 @@ Special thanks to everyone who contributed to making this project a success! �
 
 ## 📬 Contributing
 
+![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)
+
 Want to improve **Paw And Order**? Feel free to contribute!  
 Pull requests are welcome. For major changes, please email [alfardil.alam@nyu.edu](mailto:alfardil.alam@nyu.edu).
 
 ---
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com
