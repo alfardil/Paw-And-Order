@@ -1,8 +1,18 @@
 import { db } from "..";
 import { z } from "zod";
-import { createPartySchema } from "@/validation/party.schema";
+import { partySchema } from "@/validation/party.schema";
 
-type CreatePartyInput = z.infer<typeof createPartySchema>;
+type CreatePartyInput = z.infer<typeof partySchema>;
+
+export const getAllParties = async () => {
+  try {
+    return await db.party.findMany();
+  }
+  catch (error) {
+    console.error("Function couldn't get all parties", error);
+    return null;
+  }
+};
 
 export const createParty = async (data: CreatePartyInput) => {
   const {

@@ -1,16 +1,20 @@
 import { useState } from "react";
-import { mockParties, currentUser } from "../mockData";
 import { Link, useNavigate } from "react-router-dom";
-import "../App.css";
+import { useFetchAllPartiesQuery } from "./hooks";
+import { Party } from "../../../validation/party.schema";
 
 function JoinGame() {
   const [joinCode, setJoinCode] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleJoinParty = (partyId: number) => {
+  const { data: parties = [] } = useFetchAllPartiesQuery();
+  console.log(parties);
+
+  const handleJoinParty = async (id: string) => {
     setError("");
-    const matchingParty = mockParties.find((party) => party.id === partyId);
+
+    const matchingParty = parties?.find((party: Party) => party.id === id);
 
     if (!matchingParty) {
       setError("Court not found");
@@ -21,13 +25,10 @@ function JoinGame() {
       setError("Court is full");
       return;
     }
+
     if (matchingParty.started) {
       setError("Court is already started");
       return;
-    }
-
-    if (!matchingParty.userIds.includes(currentUser.userId)) {
-      matchingParty.userIds.push(currentUser.userId);
     }
 
     navigate(`/room/${matchingParty.id}`);
@@ -35,21 +36,21 @@ function JoinGame() {
 
   const handleJoin = () => {
     setError("");
-    const roomCode = parseInt(joinCode, 10);
 
-    if (isNaN(roomCode)) {
+    if (!joinCode.trim()) {
       setError("Invalid court code");
       return;
     }
 
-    const matchingParty = mockParties.find(
-      (party) => party.roomCode === roomCode
+    const matchingParty = parties.find(
+      (party: Party) => party.roomCode === joinCode
     );
 
     if (!matchingParty) {
       setError("Court not found");
       return;
     }
+
     handleJoinParty(matchingParty.id);
   };
 
@@ -112,9 +113,9 @@ function JoinGame() {
 
         <div className="join-content">
           Available Rooms:
-          {mockParties
-            .filter((party) => !party.isFull && !party.started)
-            .map((party) => {
+          {parties
+            .filter((party: Party) => !party.isFull && !party.started)
+            .map((party: Party) => {
               return (
                 <button
                   key={party.id}

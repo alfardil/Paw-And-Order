@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { currentUser } from "../../mockData";
-import { useCreateParty } from "../hooks";
-import { createPartySchema } from "../../validation/party.schema";
+import { currentUser } from "../../../mockData";
+import { useCreateParty } from "./hooks";
+import { partySchema } from "../../../validation/party.schema";
 
 function CreateGame() {
   const [prompt, setPrompt] = useState("");
@@ -58,7 +58,7 @@ function CreateGame() {
       feedbacks: [],
     };
 
-    const parseResult = createPartySchema.safeParse(payload);
+    const parseResult = partySchema.safeParse(payload);
     if (!parseResult.success) {
       const firstErrorMessage =
         parseResult.error.issues[0]?.message ?? "Validation error";

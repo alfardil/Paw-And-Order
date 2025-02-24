@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import ChooseRoom from "./components/ChooseRoom";
-import JoinGame from "./components/JoinGame";
+import ChooseRoom from "./Menu/_components/Menu";
+import JoinGame from "./Menu/_components/JoinMenu/JoinGame";
 import Lobby from "./components/Lobby";
-import CreateGame from "./game/_components/CreateGame";
+import CreateGame from "./Menu/_components/CreateMenu/CreateGame";
 import PlayGame from "./components/PlayGame";
 import NotFound from "./components/NotFound";
 import GameReport from "./components/GameReport";

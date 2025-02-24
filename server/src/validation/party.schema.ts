@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const createPartySchema = z.object({
+export const partySchema = z.object({
   id: z.string().optional(),
   name: z.string().nonempty("Party name is required."),
   prompt: z.string().nonempty("Prompt is required."),

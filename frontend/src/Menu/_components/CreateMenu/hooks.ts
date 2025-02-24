@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 async function postCreateParty(partyData: any) {
-  const response = await fetch("/api/partyCreate", {
+  const response = await fetch("/api/party/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
