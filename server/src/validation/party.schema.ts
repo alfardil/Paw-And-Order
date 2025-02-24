@@ -39,3 +39,5 @@ export const partySchema = z.object({
     )
     .default([]),
 });
+
+export type Party = z.infer<typeof partySchema>;

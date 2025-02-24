@@ -1,7 +1,6 @@
 import { Link, useParams } from "react-router-dom";
-import { mockParties, mockUsers } from "../mockData";
-import "../App.css";
-import StartGame from "./StartGame";
+import StartGame from "../../../components/StartGame";
+import { useFindPartyQuery } from "./hooks";
 
 interface ParamTypes {
   [key: string]: string | undefined;
@@ -10,6 +9,7 @@ interface ParamTypes {
 
 function Lobby() {
   const { joinedPartyId: joinedPartyId } = useParams<ParamTypes>();
+  console.log(joinedPartyId);
 
   if (!joinedPartyId) {
     return (
@@ -19,9 +19,8 @@ function Lobby() {
       </div>
     );
   }
-
-  const partyId = parseInt(joinedPartyId, 10);
-  const party = mockParties.find((p) => p.id === partyId);
+  const partyId = joinedPartyId.trim();
+  const { data: party } = useFindPartyQuery(partyId);
 
   if (!party) {
     return (
@@ -31,10 +30,6 @@ function Lobby() {
       </div>
     );
   }
-
-  const usersInRoom = mockUsers.filter((user) =>
-    party.userIds.includes(user.userId)
-  );
 
   return (
     <div className="game-container">
@@ -66,13 +61,13 @@ function Lobby() {
         <h2>Prompt: {party.prompt}</h2>
         <h3>Users in this room:</h3>
         <ul>
-          {usersInRoom.map((user) => (
+          {party.users.map((user: any) => (
             <li key={user.userId}>
               {user.name} ({user.authProvider})
             </li>
           ))}
         </ul>
-        <StartGame party={party} />
+        {party.users.length >= 2 && <StartGame party={party} />}
       </div>
     </div>
   );

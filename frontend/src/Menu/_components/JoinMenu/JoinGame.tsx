@@ -14,7 +14,7 @@ function JoinGame() {
   const handleJoinParty = async (id: string) => {
     setError("");
 
-    const matchingParty = parties?.find((party: Party) => party.id === id);
+    const matchingParty = parties.find((party: Party) => party.id === id);
 
     if (!matchingParty) {
       setError("Court not found");
@@ -31,7 +31,7 @@ function JoinGame() {
       return;
     }
 
-    navigate(`/room/${matchingParty.id}`);
+    navigate(`/party/find/${matchingParty.id}`);
   };
 
   const handleJoin = () => {

@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Party } from "../../../validation/party.schema";
 
-async function postCreateParty(partyData: any) {
+async function postCreateParty(partyData: Party) {
   const response = await fetch("/api/party/create", {
     method: "POST",
     headers: {

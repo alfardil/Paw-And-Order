@@ -51,7 +51,7 @@ function CreateGame() {
         {
           id: crypto.randomUUID(),
           createdAt: new Date(),
-          message: "Test Report",
+          message: "",
           userUuid: currentUser?.userId.toString() || "unknown",
         },
       ],
@@ -70,7 +70,7 @@ function CreateGame() {
 
     createParty(parseResult.data, {
       onSuccess: () => {
-        navigate(`/room/${payload.id}`);
+        navigate(`/party/find/${payload.id}`);
       },
       onError: (err: Error) => {
         setError(err.message || "Failed to create party");

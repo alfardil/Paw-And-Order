@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import ChooseRoom from "./Menu/_components/Menu";
 import JoinGame from "./Menu/_components/JoinMenu/JoinGame";
-import Lobby from "./components/Lobby";
+import Lobby from "./Menu/_components/JoinMenu/Lobby";
 import CreateGame from "./Menu/_components/CreateMenu/CreateGame";
 import PlayGame from "./components/PlayGame";
 import NotFound from "./components/NotFound";
@@ -12,9 +12,9 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<ChooseRoom />} />
       <Route path="/join" element={<JoinGame />} />
-      <Route path="/createGame" element={<CreateGame />} />
+      <Route path="/party/create" element={<CreateGame />} />
       <Route path="/game/:partyId" element={<PlayGame />} />
-      <Route path="/room/:joinedPartyId" element={<Lobby />} />
+      <Route path="/party/find/:joinedPartyId" element={<Lobby />} />
       <Route path="/gameReport" element={<GameReport />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

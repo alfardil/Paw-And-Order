@@ -14,6 +14,19 @@ export const getAllParties = async () => {
   }
 };
 
+export const findParty = async (id: string) => {
+  try {
+    return await db.party.findUnique({
+      where: { id },
+      include: {users: true}
+    });
+  }
+  catch (error) {
+    console.error("Function couldn't find the party", error);
+    return null;
+  }
+}
+
 export const createParty = async (data: CreatePartyInput) => {
   const {
     id,
