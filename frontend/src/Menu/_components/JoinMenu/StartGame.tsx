@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Party } from "../mockData";
+import { Party } from "../../../validation/party.schema";
 
 interface StartGameProps {
   party: Party;
@@ -9,7 +9,7 @@ interface StartGameProps {
 const StartGame = ({ party }: StartGameProps) => {
   const [countdown, setCountdown] = useState<number | null>(null);
   const navigate = useNavigate();
-  const playerCount = party.userIds.length;
+  const playerCount = party.users.length;
 
   const handleStartGame = () => {
     navigate(`/game/${party.id}`, { state: { party } });

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFetchAllPartiesQuery } from "./hooks";
-import { Party } from "../../../validation/party.schema";
 
 function JoinGame() {
   const [joinCode, setJoinCode] = useState("");
@@ -14,19 +13,15 @@ function JoinGame() {
   const handleJoinParty = async (id: string) => {
     setError("");
 
-    const matchingParty = parties.find((party: Party) => party.id === id);
+    const matchingParty = parties.find((party) => party.id === id);
 
     if (!matchingParty) {
       setError("Court not found");
       return;
-    }
-
-    if (matchingParty.isFull) {
+    } else if (matchingParty.isFull) {
       setError("Court is full");
       return;
-    }
-
-    if (matchingParty.started) {
+    } else if (matchingParty.started) {
       setError("Court is already started");
       return;
     }
@@ -35,16 +30,11 @@ function JoinGame() {
   };
 
   const handleJoin = () => {
-    setError("");
-
     if (!joinCode.trim()) {
       setError("Invalid court code");
       return;
     }
-
-    const matchingParty = parties.find(
-      (party: Party) => party.roomCode === joinCode
-    );
+    const matchingParty = parties.find((party) => party.roomCode === joinCode);
 
     if (!matchingParty) {
       setError("Court not found");
@@ -114,8 +104,8 @@ function JoinGame() {
         <div className="join-content">
           Available Rooms:
           {parties
-            .filter((party: Party) => !party.isFull && !party.started)
-            .map((party: Party) => {
+            .filter((party) => !party.isFull && !party.started)
+            .map((party) => {
               return (
                 <button
                   key={party.id}

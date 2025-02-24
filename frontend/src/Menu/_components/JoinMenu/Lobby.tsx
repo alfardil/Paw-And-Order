@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import StartGame from "../../../components/StartGame";
+import StartGame from "./StartGame";
 import { useFindPartyQuery } from "./hooks";
 
 interface ParamTypes {

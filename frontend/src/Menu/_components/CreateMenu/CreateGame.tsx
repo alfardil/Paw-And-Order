@@ -27,10 +27,6 @@ function CreateGame() {
   const handleCreateGame = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!prompt.trim()) {
-      setError("Provide a prompt or generate one with AI.");
-      return;
-    }
     setError("");
 
     const payload = {

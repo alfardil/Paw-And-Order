@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { Party } from "../../../validation/party.schema";
 
 export const useFetchAllPartiesQuery = () => {
-    return useQuery({
+    return useQuery<Party[]>({
         queryKey: ["party", "fetch"],
         queryFn: fetchParties,
     });
@@ -20,7 +21,7 @@ export async function fetchParties() {
 
 
 export const useFindPartyQuery = (partyId: string) => {
-    return useQuery({
+    return useQuery<Party>({
         queryKey: ["party", "find", partyId],
         queryFn: () => findParty(partyId),
     });
