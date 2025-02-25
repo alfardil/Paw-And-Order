@@ -2,19 +2,27 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Party } from "../../../validation/party.schema";
 
 async function postCreateParty(partyData: Party) {
-  const response = await fetch("/api/party/create", {
+  console.log("Party Data", partyData);
+
+
+  const res = await fetch("/api/party/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(partyData),
   });
-    console.log("Response", response)
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
+  console.log(res);
+  console.log("Response status:", res.status, res.statusText);
+
+
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
     throw new Error(errorData.message || "Failed to create party");
   }
-  const json = await response.json();
+  
+  const json = await res.json();
   return { success: json.success, message: json.message };
 }
 

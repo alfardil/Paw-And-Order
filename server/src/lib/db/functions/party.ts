@@ -1,6 +1,7 @@
 import { db } from "..";
 import { z } from "zod";
 import { partySchema } from "@/validation/party.schema";
+import { Party } from "@prisma/client";
 
 type CreatePartyInput = z.infer<typeof partySchema>;
 
@@ -27,7 +28,7 @@ export const findParty = async (id: string) => {
   }
 }
 
-export const createParty = async (data: CreatePartyInput) => {
+export const createParty = async (data: CreatePartyInput): Promise<Party | null> => {
   const {
     id,
     name,
@@ -56,34 +57,13 @@ export const createParty = async (data: CreatePartyInput) => {
         ended,
         isFull,
 
-        users: {
+        users: users.length > 0 ? {
           connect: users.map((uuid) => ({ uuid })),
-        },
+        } : undefined,
 
-        reports: {
-          create: reports.map((report) => ({
-            id: report.id ?? undefined,
-            createdAt: report.createdAt,
-            message: report.message,
-            user: {
-              connect: { uuid: report.userUuid },
-            },
-          })),
-        },
-
-        feedbacks:
-          feedbacks && feedbacks.length > 0
-            ? {
-                create: feedbacks.map((feedback) => ({
-                  id: feedback.id ?? undefined,
-                  createdAt: feedback.createdAt,
-                  content: feedback.content,
-                  user: {
-                    connect: { uuid: feedback.userUuid },
-                  },
-                })),
-              }
-            : undefined,
+        reports: undefined,
+        feedbacks: undefined,
+        
       },
     });
   } catch (error) {
