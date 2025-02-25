@@ -18,16 +18,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@oslojs/crypto": "^1.0.1",
+    "@oslojs/encoding": "^1.1.0",
     "@prisma/adapter-pg": "^6.4.1",
     "@prisma/client": "^6.4.1",
     "@types/dotenv": "^8.2.3",
     "@types/express": "^5.0.0",
     "@types/morgan": "^1.9.9",
+    "arctic": "^3.3.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "morgan": "^1.10.0",
     "pg": "^8.13.3",
+    "react": "^19.0.0",
+    "sha2": "link:@oslojs/crypto/sha2",
     "zod": "^3.24.2"
   },
   "devDependencies": {
