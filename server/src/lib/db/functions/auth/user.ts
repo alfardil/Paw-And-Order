@@ -1,4 +1,4 @@
-import { db } from "..";
+import { db } from "../..";
 
 export const getUserWithId = async ({
   uuid,
@@ -10,16 +10,31 @@ export const getUserWithId = async ({
   });
 };
 
-export const createUser = async ({
+export const getUserWithGoogleId = async ({
+  googleId, 
+}: {
+  googleId: string;
+}) => {
+  return await db.user.findUnique({
+    where: { googleId },
+  });
+}
+
+export const createGoogleUser = async ({
   uuid,
+  googleId,
   joinedAt,
   email,
-  name,
+  firstName,
+  lastName,
   authProvider,
 }: {
   uuid: string;
+  googleId: string;
   joinedAt: Date;
   email: string;
+  firstName: string;
+  lastName: string;
   name: string;
   authProvider: string;
 }) => {
@@ -27,9 +42,11 @@ export const createUser = async ({
     return await db.user.create({
       data: {
         uuid,
+        googleId,
         joinedAt,
         email,
-        name,
+        firstName,
+        lastName,
         authProvider,
       },
     });

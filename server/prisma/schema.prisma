@@ -16,13 +16,24 @@ datasource db {
 model User {
   uuid         String   @id @default(uuid())
   joinedAt     DateTime @default(now())
-  email        String   @unique
-  name         String?
+  googleId     String?  @unique
+  firstName    String?
+  lastName     String?
+  email        String?  @unique
   authProvider String?
 
   Party     Party[]
+  sessions  Session[]
   reports   Report[]
   feedbacks Feedback[]
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  expiresAt DateTime
+
+  user User @relation(references: [uuid], fields: [userId], onDelete: Cascade)
 }
 
 model Party {

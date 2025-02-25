@@ -6,8 +6,6 @@ import { ZodError } from "zod";
 export const createPartyRouter = Router();
 
 createPartyRouter.post("/", async (req, res): Promise<any> => {
-  console.log("Request body", req.body);
-
   try {
     const parsedBody = partySchema.parse(req.body);
 

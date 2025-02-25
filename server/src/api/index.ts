@@ -5,10 +5,6 @@ import { findPartyRouter } from "./findParty";
 
 export const apiRouter = Router();
 
-apiRouter.get("", (_, res) => {
-  res.json({ status: true, message: "Hello, world!" });
-});
-
 apiRouter.use("/party/create", createPartyRouter);
 apiRouter.use("/party/fetch", fetchAllParties);
 apiRouter.use("/party/find", findPartyRouter);

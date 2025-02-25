@@ -15,7 +15,7 @@ declare const globalThis: {
 const db = globalThis.prismaGlobal ?? prismaClientSingleton();
 
 export { db };
-export * from "@/lib/db/functions/user";
+export * from "@/lib/db/functions/auth/user";
 export * from "@/lib/db/functions/party";
 
 if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = db;

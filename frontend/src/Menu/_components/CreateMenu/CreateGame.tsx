@@ -21,6 +21,7 @@ function CreateGame() {
   };
 
   const handleGeneratePrompt = () => {
+    // TODO: Implement AI prompt generation
     setPrompt("Should we close down schools?");
   };
 
@@ -31,7 +32,7 @@ function CreateGame() {
 
     const payload = {
       id: crypto.randomUUID(),
-      name: courtName || "Untitled Court",
+      name: courtName,
       prompt,
       createdAt: new Date(),
 
@@ -48,7 +49,7 @@ function CreateGame() {
           id: crypto.randomUUID(),
           createdAt: new Date(),
           message: "",
-          userUuid: currentUser?.userId.toString() || "unknown",
+          userUuid: currentUser?.userId.toString(),
         },
       ],
       feedbacks: [],
