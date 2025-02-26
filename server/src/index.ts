@@ -4,7 +4,12 @@ import morgan from "morgan";
 import path from "path";
 import { apiRouter } from "@/api";
 import { superjsonMiddleware } from "./lib/middleware/superjson";
-import { deleteSessionTokenCookie, invalidateSession, setSessionTokenCookie, validateSessionToken } from "./lib/auth";
+import {
+  deleteSessionTokenCookie,
+  invalidateSession,
+  setSessionTokenCookie,
+  validateSessionToken,
+} from "./lib/auth";
 
 dotenv.config();
 
@@ -95,7 +100,7 @@ try {
   console.log(
     `\n\nServer listening on http://${
       serverMetadata.address === "::" ? "127.0.0.1" : serverMetadata.address
-    }:${serverMetadata.port}`
+    }:${serverMetadata.port}`,
   );
 } catch (e) {
   console.error(e);

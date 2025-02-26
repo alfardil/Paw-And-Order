@@ -1,16 +1,11 @@
+import { partyRouter } from "@/api/party";
 import { Router } from "express";
-import { createPartyRouter } from "./createParty";
-import { fetchAllParties } from "./getAllParties";
-import { findPartyRouter } from "./findParty";
 import { authRouter } from "./auth";
 
 export const apiRouter = Router();
 
 apiRouter.use("/auth", authRouter);
-apiRouter.use("/party/create", createPartyRouter);
-apiRouter.use("/party/fetch", fetchAllParties);
-apiRouter.use("/party/find", findPartyRouter);
-
+apiRouter.use("/party", partyRouter);
 
 // Place the different api routers below here, for example:
 //

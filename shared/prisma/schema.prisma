@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  uuid         String   @id @default(uuid())
+  joinedAt     DateTime @default(now())
+  googleId     String?  @unique
+  firstName    String?
+  lastName     String?
+  email        String?  @unique
+  authProvider String?
+
+  Party     Party[]
+  sessions  Session[]
+  reports   Report[]
+  feedbacks Feedback[]
+}
+
+model Session {
+  id        String    @id @default(uuid())
+  userId    String
+  expiresAt DateTime
+  deletedAt DateTime?
+
+  user User @relation(references: [uuid], fields: [userId], onDelete: Cascade)
+}
+
+model Party {
+  id         String   @id @default(uuid())
+  name       String
+  prompt     String
+  createdAt  DateTime @default(now())
+  roomCode   String
+  maxPlayers Int
+  started    Boolean  @default(false)
+  ended      Boolean  @default(false)
+  isFull     Boolean  @default(false)
+
+  users     User[]
+  reports   Report[]
+  feedbacks Feedback[]
+}
+
+model Report {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  message   String
+
+  userUuid String
+  partyId  String
+
+  user  User  @relation(fields: [userUuid], references: [uuid])
+  party Party @relation(fields: [partyId], references: [id])
+
+  @@unique([userUuid, partyId])
+}
+
+model Feedback {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  content   String
+
+  partyId String
+  party   Party  @relation(fields: [partyId], references: [id])
+
+  userUuid String
+  user     User?  @relation(fields: [userUuid], references: [uuid])
+}
