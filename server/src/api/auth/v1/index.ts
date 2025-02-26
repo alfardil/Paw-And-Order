@@ -12,6 +12,7 @@ import { attempt } from "@/validation/attempt";
 import { User } from "shared/db";
 import { decodeIdToken, generateCodeVerifier, generateState } from "arctic";
 import { Router } from "express";
+import { deleteSessionById } from "@/lib/db/functions/auth/sessions";
 
 export const authRouterV1 = Router();
 
@@ -178,4 +179,43 @@ authRouterV1.get("/login", async (req, res) => {
   await invalidateSession(session.id);
   deleteSessionTokenCookie(res);
   return res.redirect(`${process.env.WEB_URL}/success?c=1`);
+});
+
+authRouterV1.post("/logout", async (req, res) => {
+  const session = res.locals.session;
+  const user = res.locals.user;
+
+  if (!session || !user) {
+    return sendSuperJson(res, 401, {
+      success: false,
+      message: "You are not authenticated.",
+    });
+  }
+
+  const [deletedSessionError, deletedSession] = await attempt(
+    deleteSessionById({ id: session.id }),
+  );
+
+  if (deletedSessionError || !deletedSession) {
+    return sendSuperJson(
+      res,
+      500,
+      {
+        success: false,
+        message: "Failed to log out.",
+      },
+      {
+        message: "Failed",
+        error: deletedSessionError,
+      },
+    );
+  }
+
+  deleteSessionTokenCookie(res);
+
+  return sendSuperJson(res, 200, {
+    success: true,
+    message: "You have been successfully logged out!",
+    data: {},
+  });
 });

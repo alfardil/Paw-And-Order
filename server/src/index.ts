@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
@@ -10,8 +11,6 @@ import {
   setSessionTokenCookie,
   validateSessionToken,
 } from "./lib/auth";
-
-dotenv.config();
 
 export const app = express();
 const port = 3050;

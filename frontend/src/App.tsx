@@ -8,6 +8,7 @@ import NotFound from "./components/NotFound";
 import GameReport from "./components/GameReport";
 import AuthPage from "./Menu/_components/auth/AuthPage";
 import Success from "./Menu/_components/auth/success/Success";
+import LogoutPage from "./Menu/_components/auth/logout/LogoutPage";
 
 function AppRoutes() {
   return (
@@ -20,7 +21,7 @@ function AppRoutes() {
       <Route path="/game/:partyId" element={<PlayGame />} />
       <Route path="/party/find/:joinedPartyId" element={<Lobby />} />
       <Route path="/gameReport" element={<GameReport />} />
-
+      <Route path="/logout" element={<LogoutPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

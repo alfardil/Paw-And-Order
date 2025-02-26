@@ -1,21 +1,33 @@
-import { Session } from "@prisma/client";
-import { db } from "../..";
+import { Session } from "shared/db";
+import { db } from "../../index";
 
-export async function findSessionById({ id }: { id: string }): Promise<Session | null> {
+export async function findSessionById({
+  id,
+}: {
+  id: string;
+}): Promise<Session | null> {
   return await db.session.findUnique({
     where: { id },
   });
 }
 
-export async function findSessionsByUserId({ userId }: { userId: string }): Promise<Session[]> {
+export async function findSessionsByUserId({
+  userId,
+}: {
+  userId: string;
+}): Promise<Session[]> {
   return await db.session.findMany({
     where: { userId },
   });
 }
 
-export async function createSession(
-  { userId, expiresAt }: { userId: string; expiresAt: Date }
-): Promise<Session | null> {
+export async function createSession({
+  userId,
+  expiresAt,
+}: {
+  userId: string;
+  expiresAt: Date;
+}): Promise<Session | null> {
   try {
     const session = await db.session.create({
       data: {
@@ -30,9 +42,13 @@ export async function createSession(
   }
 }
 
-export async function updateSessionById(
-  { id, deletedAt }: { id: string; deletedAt: Date },
-): Promise<boolean> {
+export async function updateSessionById({
+  id,
+  deletedAt,
+}: {
+  id: string;
+  deletedAt: Date;
+}): Promise<boolean> {
   try {
     const session = await db.session.update({
       where: { id },
@@ -45,7 +61,7 @@ export async function updateSessionById(
   }
 }
 
-export async function deleteSessionById({ id }: { id: string }): Promise<boolean> {
+export async function deleteSessionById({ id }: { id: string }) {
   try {
     const session = await db.session.delete({
       where: { id },
@@ -57,7 +73,11 @@ export async function deleteSessionById({ id }: { id: string }): Promise<boolean
   }
 }
 
-export async function deleteSessionsByUserId({ userId }: { userId: string }): Promise<boolean> {
+export async function deleteSessionsByUserId({
+  userId,
+}: {
+  userId: string;
+}): Promise<boolean> {
   try {
     const result = await db.session.deleteMany({
       where: { userId },
