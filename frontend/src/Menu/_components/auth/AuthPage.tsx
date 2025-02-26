@@ -1,13 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useFetchAuthQuery } from "./hooks";
 
 function Auth() {
   const { data, error, isLoading, refetch } = useFetchAuthQuery();
-  const navigate = useNavigate();
+  console.log(data);
+  console.log(error);
+  console.log(isLoading);
 
-  if (!isLoading) {
-    return <div>isLoading...</div>;
-  }
   if (error) {
     return (
       <div>
@@ -17,16 +16,12 @@ function Auth() {
     );
   }
 
+  if (!isLoading) {
+    return <div>isLoading...</div>;
+  }
+
   const isAuthenticated = data?.success && data.data?.user ? true : false;
   const user = data?.data?.user;
-
-  const handleSignIn = () => {
-    navigate("/auth/v1/google");
-  };
-
-  const handleLogout = () => {
-    navigate("/auth/v1/login");
-  };
 
   return (
     <div style={{ padding: 20 }}>
@@ -36,11 +31,15 @@ function Auth() {
           <p>
             Welcome, <strong>{user.email || user.uuid}</strong>
           </p>
-          <button onClick={handleLogout}>Logout</button>
+          <Link to={"api/auth/v1/logout"} reloadDocument>
+            <button>Logout</button>
+          </Link>
         </div>
       ) : (
         <div>
-          <button onClick={handleSignIn}>Sign in with Google</button>
+          <Link to={"api/auth/v1/google"} reloadDocument>
+            <button>Sign in with Google</button>
+          </Link>
         </div>
       )}
     </div>

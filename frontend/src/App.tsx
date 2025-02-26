@@ -7,17 +7,22 @@ import PlayGame from "./components/PlayGame";
 import NotFound from "./components/NotFound";
 import GameReport from "./components/GameReport";
 import AuthPage from "./Menu/_components/auth/AuthPage";
+import Success from "./Menu/_components/auth/success/Success";
+import Error from "./Menu/_components/auth/error/error";
 
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<ChooseRoom />} />
-      <Route path="/auth/v1/google" element={<AuthPage />} />
+      <Route path="/" element={<AuthPage />} />
+      <Route path="/success" element={<Success />} />
+      <Route path="/error" element={<Error />} />
+      <Route path="/chooseRoom" element={<ChooseRoom />} />
       <Route path="/join" element={<JoinGame />} />
       <Route path="/party/create" element={<CreateGame />} />
       <Route path="/game/:partyId" element={<PlayGame />} />
       <Route path="/party/find/:joinedPartyId" element={<Lobby />} />
       <Route path="/gameReport" element={<GameReport />} />
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

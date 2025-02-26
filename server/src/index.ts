@@ -78,7 +78,6 @@ app.use(async (req, res, next) => {
   return next();
 });
 
-
 app.use("/api", apiRouter);
 
 // Serve static files

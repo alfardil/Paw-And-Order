@@ -12,10 +12,10 @@ async function fetchAuth(): Promise<ValidationResponse> {
 }
 
 export const useFetchAuthQuery = () => {
-    const {data, error, isLoading, ...rest } = useQuery<ValidationResponse>({
+    const {data, error, isLoading, } = useQuery<ValidationResponse>({
         queryKey: ["auth", "validate"],
         queryFn: fetchAuth,
     });
 
-    return {data, error, isLoading, ...rest};
+    return {data, error, isLoading, refetch: () => fetchAuth()};
 }
