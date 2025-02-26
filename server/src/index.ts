@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
-import cookieParser from "cookie-parser";
 import path from "path";
 import { apiRouter } from "@/api";
 import { superjsonMiddleware } from "./lib/middleware/superjson";

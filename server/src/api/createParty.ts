@@ -1,7 +1,7 @@
 import { createParty } from "@/lib/db/functions/party";
 import { Router } from "express";
 import { partySchema } from "@/validation/party.schema";
-import { ZodError } from "zod";
+import { z } from "zod";
 
 export const createPartyRouter = Router();
 
@@ -23,7 +23,7 @@ createPartyRouter.post("/", async (req, res): Promise<any> => {
       data: newParty,
     });
   } catch (error) {
-    if (error instanceof ZodError) {
+    if (error instanceof z.ZodError) {
       return res.status(400).json({
         status: false,
         message: "Validation failed.",

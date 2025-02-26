@@ -9,7 +9,6 @@ interface ParamTypes {
 
 function Lobby() {
   const { joinedPartyId: joinedPartyId } = useParams<ParamTypes>();
-  console.log(joinedPartyId);
 
   if (!joinedPartyId) {
     return (
@@ -62,8 +61,8 @@ function Lobby() {
         <h3>Users in this room:</h3>
         <ul>
           {party.users.map((user: any) => (
-            <li key={user.userId}>
-              {user.name} ({user.authProvider})
+            <li key={user.uuid}>
+              {user.firstName} ({user.authProvider}) {user.uuid}
             </li>
           ))}
         </ul>

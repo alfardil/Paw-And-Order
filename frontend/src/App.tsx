@@ -6,11 +6,13 @@ import CreateGame from "./Menu/_components/CreateMenu/CreateGame";
 import PlayGame from "./components/PlayGame";
 import NotFound from "./components/NotFound";
 import GameReport from "./components/GameReport";
+import AuthPage from "./Menu/_components/auth/AuthPage";
 
 function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<ChooseRoom />} />
+      <Route path="/auth/v1/google" element={<AuthPage />} />
       <Route path="/join" element={<JoinGame />} />
       <Route path="/party/create" element={<CreateGame />} />
       <Route path="/game/:partyId" element={<PlayGame />} />

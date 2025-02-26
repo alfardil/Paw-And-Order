@@ -44,27 +44,21 @@ function CreateGame() {
       ended: false,
       isFull: false,
 
-      reports: [
-        {
-          id: crypto.randomUUID(),
-          createdAt: new Date(),
-          message: "",
-          userUuid: currentUser?.userId.toString(),
-        },
-      ],
-      feedbacks: [],
+      reports: undefined,
+      feedbacks: undefined,
     };
+    console.log("payload: ", payload);
 
     const parseResult = partySchema.safeParse(payload);
+
+    console.log("parsed payload:", parseResult);
+
     if (!parseResult.success) {
       const firstErrorMessage =
         parseResult.error.issues[0]?.message ?? "Validation error";
       setError(`Client-side validation failed: ${firstErrorMessage}`);
       return;
     }
-
-    console.log("Validated payload:", parseResult.data);
-
     createParty(parseResult.data, {
       onSuccess: () => {
         navigate(`/party/find/${payload.id}`);

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const partySchema = z.object({
-  id: z.string().optional(),
+  id: z.string().default(() => crypto.randomUUID()),
   name: z.string().nonempty("Party name is required."),
   prompt: z.string().nonempty("Prompt is required."),
   roomCode: z.string().nonempty("Room code is required."),
@@ -26,7 +26,7 @@ export const partySchema = z.object({
         userUuid: z.string(),
       })
     )
-    .default([]),
+    .default([]).optional(),
 
   feedbacks: z
     .array(
@@ -37,7 +37,7 @@ export const partySchema = z.object({
         userUuid: z.string(),
       })
     )
-    .default([]),
+    .default([]).optional(),
 });
 
 export type Party = z.infer<typeof partySchema>;

@@ -26,7 +26,7 @@ export const partySchema = z.object({
         userUuid: z.string(),
       })
     )
-    .default([]),
+    .default([]).optional(),
 
   feedbacks: z
     .array(
@@ -37,7 +37,7 @@ export const partySchema = z.object({
         userUuid: z.string(),
       })
     )
-    .default([]),
+    .default([]).optional(),
 });
 
 export type Party = z.infer<typeof partySchema>;
