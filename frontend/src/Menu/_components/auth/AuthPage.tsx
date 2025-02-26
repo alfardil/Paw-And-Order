@@ -1,12 +1,9 @@
 import { Link } from "react-router-dom";
 import { useFetchAuthQuery } from "./hooks";
+import { RotateLoader } from "react-spinners";
 
 function Auth() {
   const { data, error, isLoading, refetch } = useFetchAuthQuery();
-  console.log(data);
-  console.log(error);
-  console.log(isLoading);
-
   if (error) {
     return (
       <div>
@@ -17,14 +14,19 @@ function Auth() {
   }
 
   if (!isLoading) {
-    return <div>isLoading...</div>;
+    return (
+      <div className="game-container">
+        <RotateLoader color="#9844fc" />
+      </div>
+    );
   }
 
   const isAuthenticated = data?.success && data.data?.user ? true : false;
+
   const user = data?.data?.user;
 
   return (
-    <div style={{ padding: 20 }}>
+    <div className="game-container">
       <h1>Google Authentication</h1>
       {isAuthenticated && user ? (
         <div>
