@@ -45,6 +45,13 @@ pnpm install
 pnpm run dev
 ```
 
+Then to get the database stuff:
+
+```sh
+cd shared
+pnpm prisma generate
+```
+
 ---
 
 ## 📌 Features
