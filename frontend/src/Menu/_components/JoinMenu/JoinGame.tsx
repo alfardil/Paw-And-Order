@@ -8,7 +8,6 @@ function JoinGame() {
   const navigate = useNavigate();
 
   const { data: parties = [] } = useFetchAllPartiesQuery();
-  console.log(parties);
 
   const handleJoinParty = async (id: string) => {
     setError("");

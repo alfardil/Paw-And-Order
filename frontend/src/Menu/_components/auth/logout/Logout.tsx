@@ -1,8 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import superjson from "superjson";
 import { ApiResponse } from "../../../../lib/apiResponse";
+import { Link } from "react-router-dom";
+import { RotateLoader } from "react-spinners";
 
-export default function LogoutPage() {
+export default function Logout() {
   const { status, mutate, error } = useMutation({
     mutationFn: async () => {
       const res = await fetch("/api/auth/v1/logout", {
@@ -19,14 +21,25 @@ export default function LogoutPage() {
     },
   });
 
+  if (status === "pending") {
+    return (
+      <div className="game-container">
+        <RotateLoader color="#9844fc" />
+      </div>
+    );
+  }
+
   const handleLogout = () => {
     mutate(undefined, {
       onSuccess: () => {
-        // show success msg.
         // 2 seconds later, redirect.
       },
     });
   };
 
-  return <button onClick={handleLogout}>bye bye dont come back</button>;
+  return (
+    <Link to={"/"} reloadDocument>
+      <button onClick={handleLogout}>bye bye dont come back</button>
+    </Link>
+  );
 }

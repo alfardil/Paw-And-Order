@@ -49,7 +49,6 @@ app.use((req, res, next) => {
   const originHeader = req.headers.origin;
   const hostHeader = req.headers.host;
 
-  console.log(originHeader, hostHeader, process.env.NODE_ENV);
 
   if (!originHeader || !hostHeader || hostHeader != originHeader) {
     res.status(403).end();

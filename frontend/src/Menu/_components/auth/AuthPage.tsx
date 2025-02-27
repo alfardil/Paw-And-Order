@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useFetchAuthQuery } from "./hooks";
 import { RotateLoader } from "react-spinners";
+import Logout from "./logout/Logout";
 
 function Auth() {
   const { data: json, error, isPending, refetch } = useFetchAuthQuery();
@@ -30,9 +31,7 @@ function Auth() {
             Welcome,{" "}
             <strong>{json.data.user.email || json.data.user.uuid}</strong>
           </p>
-          <Link to={"api/auth/v1/logout"} reloadDocument>
-            <button>Logout</button>
-          </Link>
+          <Logout />
         </div>
       ) : (
         <div>

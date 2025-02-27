@@ -8,7 +8,7 @@ import NotFound from "./components/NotFound";
 import GameReport from "./components/GameReport";
 import AuthPage from "./Menu/_components/auth/AuthPage";
 import Success from "./Menu/_components/auth/success/Success";
-import LogoutPage from "./Menu/_components/auth/logout/LogoutPage";
+import LogoutPage from "./Menu/_components/auth/logout/Logout";
 
 function AppRoutes() {
   return (

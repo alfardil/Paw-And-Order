@@ -47,11 +47,8 @@ function CreateGame() {
       reports: undefined,
       feedbacks: undefined,
     };
-    console.log("payload: ", payload);
 
     const parseResult = partySchema.safeParse(payload);
-
-    console.log("parsed payload:", parseResult);
 
     if (!parseResult.success) {
       const firstErrorMessage =
