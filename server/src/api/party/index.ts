@@ -1,5 +1,6 @@
 import { createParty, findParty, getAllParties } from "@/lib/db";
 import { sendSuperJson } from "@/lib/superjson-sender";
+import { attempt } from "@/validation/attempt";
 import { partySchema } from "@/validation/party.schema";
 import { Router } from "express";
 import { z } from "zod";
@@ -17,6 +18,11 @@ partyRouter.get("/fetch/:id", async (req, res) => {
       .json({ status: false, message: "Failed to find party", error });
   }
 });
+
+partyRouter.get("/fetch/all", async (_, res) => {
+  // TODO: IMPLEMENT THIS
+})
+ 
 
 partyRouter.post("/create", async (req, res): Promise<any> => {
   try {

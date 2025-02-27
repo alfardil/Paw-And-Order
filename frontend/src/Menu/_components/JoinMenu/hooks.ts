@@ -1,22 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import { Party } from "../../../validation/party.schema";
+import { ApiResponse } from "../../../lib/apiResponse";
+import superjson from "superjson";
 
 export const useFetchAllPartiesQuery = () => {
-    return useQuery<Party[]>({
+    return useQuery({
         queryKey: ["party", "fetch"],
         queryFn: fetchParties,
     });
 }
 
 export async function fetchParties() {
-    const res = await fetch("/api/party/fetch", {method: "GET"});
+    const res = await fetch("/api/party/fetch/all", {method: "GET"});
 
     if (!res.ok) {
         throw new Error("Failed to fetch all parties");
     }
 
-    const json = await res.json();
-    return json;
+    const data = superjson.parse(await res.text()) as ApiResponse<unknown>;
+    return {success: data.success, data: data}
 }
 
 
