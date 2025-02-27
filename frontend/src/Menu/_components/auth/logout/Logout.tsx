@@ -21,6 +21,15 @@ export default function Logout() {
     },
   });
 
+  if (error) {
+    return (
+      <div>
+        <h2>Error: {(error as Error).message}</h2>
+        <button onClick={() => mutate()}>Retry</button>
+      </div>
+    );
+  }
+
   if (status === "pending") {
     return (
       <div className="game-container">
