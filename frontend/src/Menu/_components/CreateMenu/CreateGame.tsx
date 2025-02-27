@@ -1,16 +1,29 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { currentUser } from "../../../mockData";
 import { useCreateParty } from "./hooks";
 import { partySchema } from "../../../validation/party.schema";
+import { useFetchAuthQuery } from "../auth/hooks";
+import { Loader } from "../ui/Loader";
 
 function CreateGame() {
   const [prompt, setPrompt] = useState("");
   const [courtName, setCourtName] = useState("");
-  const [error, setError] = useState("");
+  const [err, setError] = useState("");
   const navigate = useNavigate();
 
   const { mutate: createParty } = useCreateParty();
+  const { data: json, error, isPending, refetch } = useFetchAuthQuery();
+
+  if (isPending) return <Loader />;
+  if (!json?.success) {
+    return (
+      <div>
+        <h2>Error: {(error as Error).message}</h2>
+      </div>
+    );
+  }
+
+  const user = json.data.user;
 
   const handlePromptChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setPrompt(e.target.value);
@@ -36,7 +49,7 @@ function CreateGame() {
       prompt,
       createdAt: new Date(),
 
-      users: currentUser ? [currentUser.userId.toString()] : [],
+      users: user.uuid ? [user.uuid] : [],
 
       roomCode: Math.floor(10000 + Math.random() * 90000).toString(),
       maxPlayers: 2,
@@ -153,7 +166,7 @@ function CreateGame() {
             </button>
           </div>
 
-          {error && <div className="error-message">{error}</div>}
+          {err && <div className="error-message">{err}</div>}
         </form>
       </div>
     </div>

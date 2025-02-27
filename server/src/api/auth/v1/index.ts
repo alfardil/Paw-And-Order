@@ -153,8 +153,6 @@ authRouterV1.get("/google/callback", async (req, res) => {
 
   const [sessionError, session] = await attempt(generateSession(user.uuid));
 
-  console.log(sessionError);
-
   if (sessionError || !session) {
     return res.redirect(`${process.env.WEB_URL}/error?c=0`);
   }

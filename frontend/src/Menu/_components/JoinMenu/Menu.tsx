@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Logout from "../auth/logout/Logout";
 
 function ChooseRoom() {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ function ChooseRoom() {
         <div className="bg-grid"></div>
         <div className="bg-overlay"></div>
       </div>
+      <Logout />
 
       <div className="game-logo">
         <div className="logo-container">

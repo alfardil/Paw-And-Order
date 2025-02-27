@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import superjson from "superjson";
 import { ApiResponse } from "../../../../lib/apiResponse";
 import { Link } from "react-router-dom";
-import { RotateLoader } from "react-spinners";
+import { Loader } from "../../ui/Loader";
 
 export default function Logout() {
   const { status, mutate, error } = useMutation({
@@ -31,24 +31,20 @@ export default function Logout() {
   }
 
   if (status === "pending") {
-    return (
-      <div className="game-container">
-        <RotateLoader color="#9844fc" />
-      </div>
-    );
+    return <Loader />;
   }
 
   const handleLogout = () => {
     mutate(undefined, {
-      onSuccess: () => {
-        // 2 seconds later, redirect.
-      },
+      onSuccess: () => {},
     });
   };
 
   return (
-    <Link to={"/"} reloadDocument>
-      <button onClick={handleLogout}>bye bye dont come back</button>
-    </Link>
+    <div style={{ zIndex: "1" }}>
+      <Link to={"/"} reloadDocument>
+        <button onClick={handleLogout}>Logout</button>
+      </Link>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { RotateLoader } from "react-spinners";
+import { Loader } from "../../ui/Loader";
 
 export const Success = () => {
   const navigate = useNavigate();
@@ -12,9 +12,9 @@ export const Success = () => {
 
   return (
     <div className="game-container">
-      <h1>Success!</h1>
+      <h2>Success!</h2>
       <p>You have successfully authenticated. Please wait to be redirected.</p>
-      <RotateLoader color="#9844fc" />
+      <Loader />
     </div>
   );
 };

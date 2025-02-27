@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useFetchAuthQuery } from "./hooks";
-import { RotateLoader } from "react-spinners";
 import Logout from "./logout/Logout";
+import { Loader } from "../ui/Loader";
 
 function Auth() {
   const { data: json, error, isPending, refetch } = useFetchAuthQuery();
@@ -15,11 +15,7 @@ function Auth() {
   }
 
   if (isPending) {
-    return (
-      <div className="game-container">
-        <RotateLoader color="#9844fc" />
-      </div>
-    );
+    return <Loader />;
   }
 
   return (
@@ -37,9 +33,6 @@ function Auth() {
         <div>
           <Link to={"api/auth/v1/google"} reloadDocument>
             <button>Sign in with Google</button>
-          </Link>
-          <Link to={"api/auth/v1/login"} reloadDocument>
-            <button>Login</button>
           </Link>
         </div>
       )}
