@@ -184,7 +184,7 @@ authRouterV1.get("/login", async (req, res) => {
 authRouterV1.post("/logout", async (req, res) => {
   const session = res.locals.session;
   const user = res.locals.user;
-
+  
   if (!session || !user) {
     return sendSuperJson(res, 401, {
       success: false,

@@ -1,7 +1,7 @@
 import cookieGen from "../cookie-gen";
 import { db, getUserWithId } from "../db";
 import { createSession, findSessionById, deleteSessionById, updateSessionById, deleteSessionsByUserId } from "../db/functions/auth/sessions";
-import { User, Session } from "@prisma/client";
+import { User, Session } from "shared/db";
 import { attempt } from "@/validation/attempt";
 import { Response } from "express";
 

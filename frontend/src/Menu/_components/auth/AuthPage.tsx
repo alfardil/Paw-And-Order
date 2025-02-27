@@ -39,6 +39,9 @@ function Auth() {
           <Link to={"api/auth/v1/google"} reloadDocument>
             <button>Sign in with Google</button>
           </Link>
+          <Link to={"api/auth/v1/login"} reloadDocument>
+            <button>Login</button>
+          </Link>
         </div>
       )}
     </div>

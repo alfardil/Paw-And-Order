@@ -15,13 +15,14 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<AuthPage />} />
       <Route path="/success" element={<Success />} />
+      <Route path="/logout" element={<LogoutPage />} />
+
       <Route path="/chooseRoom" element={<ChooseRoom />} />
       <Route path="/join" element={<JoinGame />} />
       <Route path="/party/create" element={<CreateGame />} />
       <Route path="/game/:partyId" element={<PlayGame />} />
       <Route path="/party/find/:joinedPartyId" element={<Lobby />} />
       <Route path="/gameReport" element={<GameReport />} />
-      <Route path="/logout" element={<LogoutPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

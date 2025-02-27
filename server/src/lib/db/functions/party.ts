@@ -1,5 +1,5 @@
 import { db } from "..";
-import { Party } from "@prisma/client";
+import { Party } from "shared/db";
 
 export const getAllParties = async () => {
   try {
