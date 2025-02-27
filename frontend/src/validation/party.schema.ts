@@ -13,12 +13,12 @@ export const partySchema = z.object({
   ended: z.coerce.boolean().default(false),
   isFull: z.coerce.boolean().default(false),
 
-  users: z.array(z.string()).default([]),
+  users: z.array(z.string()).default([]).optional(),
 
   reports: z
     .array(
       z.object({
-        id: z.string().optional(),
+        id: z.string(),
         createdAt: z.coerce.date().default(() => new Date()),
 
         message: z.string(),
@@ -31,7 +31,7 @@ export const partySchema = z.object({
   feedbacks: z
     .array(
       z.object({
-        id: z.string().optional(),
+        id: z.string(),
         createdAt: z.coerce.date().default(() => new Date()),
         content: z.string(),
         userUuid: z.string(),

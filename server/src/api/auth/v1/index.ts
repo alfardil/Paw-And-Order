@@ -6,7 +6,7 @@ import {
 } from "@/lib/auth";
 import { google } from "@/lib/auth/providers";
 import cookieGen from "@/lib/cookie-gen";
-import { createGoogleUser, db, getUserWithGoogleId } from "@/lib/db";
+import { createGoogleUser, getUserWithGoogleId } from "@/lib/db";
 import { sendSuperJson } from "@/lib/superjson-sender";
 import { attempt } from "@/validation/attempt";
 import { User } from "shared/db";

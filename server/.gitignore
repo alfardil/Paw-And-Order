@@ -3,5 +3,6 @@
 !.env.project
 !.env.vault
 !.env.sample
+!.env.example
 
 node_modules

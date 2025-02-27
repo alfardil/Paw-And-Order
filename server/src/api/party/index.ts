@@ -1,4 +1,5 @@
 import { createParty, findParty, getAllParties } from "@/lib/db";
+import { sendSuperJson } from "@/lib/superjson-sender";
 import { partySchema } from "@/validation/party.schema";
 import { Router } from "express";
 import { z } from "zod";
@@ -20,34 +21,31 @@ partyRouter.get("/fetch/:id", async (req, res) => {
 partyRouter.post("/create", async (req, res): Promise<any> => {
   try {
     const parsedBody = partySchema.parse(req.body);
-
     const newParty = await createParty(parsedBody);
 
     if (!newParty) {
-      return res.status(500).json({
-        status: false,
+      return sendSuperJson(res, 500, {
+        success: false,
         message: "Failed to create party.",
       });
     }
 
-    return res.status(201).json({
-      status: true,
+    return sendSuperJson(res, 201, {
+      success: true,
+      message: "Party created successfully.",
       data: newParty,
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return res.status(400).json({
-        status: false,
-        message: "Validation failed.",
-        errors: error.errors,
-      });
+      return sendSuperJson(res, 400, {
+        success: false,
+        message: "Zod error",
+      })
     }
-
-    console.error("Error in createPartyRouter POST:", error);
-    return res.status(500).json({
-      status: false,
+    return sendSuperJson(res, 500, {
+      success: false,
       message: "Internal server error.",
-    });
+    })
   }
 });
 

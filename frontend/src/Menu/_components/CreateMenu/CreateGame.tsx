@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useCreateParty } from "./hooks";
 import { partySchema } from "../../../validation/party.schema";
 import { useFetchAuthQuery } from "../auth/hooks";
 import { Loader } from "../ui/Loader";
+import { useCreateParty } from "./hooks";
 
 function CreateGame() {
   const [prompt, setPrompt] = useState("");
@@ -11,8 +11,8 @@ function CreateGame() {
   const [err, setError] = useState("");
   const navigate = useNavigate();
 
-  const { mutate: createParty } = useCreateParty();
-  const { data: json, error, isPending, refetch } = useFetchAuthQuery();
+  const { data: json, error, isPending } = useFetchAuthQuery();
+  const { mutate } = useCreateParty();
 
   if (isPending) return <Loader />;
   if (!json?.success) {
@@ -48,33 +48,42 @@ function CreateGame() {
       name: courtName,
       prompt,
       createdAt: new Date(),
-
-      users: user.uuid ? [user.uuid] : [],
-
       roomCode: Math.floor(10000 + Math.random() * 90000).toString(),
       maxPlayers: 2,
       started: false,
       ended: false,
       isFull: false,
-
-      reports: undefined,
-      feedbacks: undefined,
+      users: [user.uuid],
+      reports: [
+        {
+          id: crypto.randomUUID(),
+          createdAt: new Date(),
+          message: "",
+          userUuid: user.uuid,
+        },
+      ],
+      feedbacks: [
+        {
+          id: crypto.randomUUID(),
+          createdAt: new Date(),
+          content: "",
+          userUuid: user.uuid,
+        },
+      ],
     };
-
     const parseResult = partySchema.safeParse(payload);
 
     if (!parseResult.success) {
-      const firstErrorMessage =
-        parseResult.error.issues[0]?.message ?? "Validation error";
-      setError(`Client-side validation failed: ${firstErrorMessage}`);
+      setError("Client-side validation failed:");
+      console.log(parseResult.error);
       return;
     }
-    createParty(parseResult.data, {
-      onSuccess: () => {
-        navigate(`/party/find/${payload.id}`);
-      },
-      onError: (err: Error) => {
-        setError(err.message || "Failed to create party");
+
+    mutate(parseResult.data, {
+      onSuccess: (data) => {
+        if (data.success) {
+          navigate(`/game/${payload.id}`);
+        }
       },
     });
   };
@@ -165,9 +174,8 @@ function CreateGame() {
               <div className="button-glow" />
             </button>
           </div>
-
-          {err && <div className="error-message">{err}</div>}
         </form>
+        {err && <div className="error-message">{err}</div>}
       </div>
     </div>
   );

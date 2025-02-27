@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Party } from "../../../validation/party.schema";
+import { ApiResponse } from "../../../lib/apiResponse";
+import superjson from "superjson";
 
 async function postCreateParty(partyData: Party) {
   const res = await fetch("/api/party/create", {
@@ -7,16 +9,17 @@ async function postCreateParty(partyData: Party) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(partyData),
+    body: superjson.stringify(partyData),
   });
 
   if (!res.ok) {
-    const errorData = await res.json().catch(() => ({}));
-    throw new Error(errorData.message || "Failed to create party");
+    console.log("no good business");
+   return {success: false}
   }
   
-  const json = await res.json();
-  return { success: json.success, message: json.message };
+  const data = superjson.parse(await res.text()) as ApiResponse<unknown>;
+  console.log("Superjson parsed this:" , data)
+  return { success: data.success, data: data};
 }
 
 export function useCreateParty() {
@@ -24,8 +27,11 @@ export function useCreateParty() {
 
   return useMutation({
     mutationFn: postCreateParty,
-    onSuccess: () => {
-        queryClient.invalidateQueries();
+    onSuccess: (data) => {
+      if (data.success) {
+        queryClient.invalidateQueries({ queryKey: ["parties"] });
+      }
     }
+    
   });
 }
