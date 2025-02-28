@@ -7,6 +7,31 @@ import { z } from "zod";
 
 export const partyRouter = Router();
 
+partyRouter.get("/fetch/all", async (_, res) => {
+  try {
+    const parties = await getAllParties();
+
+    if (!parties || !parties.length) {
+      return sendSuperJson(res, 404, {
+        success: false,
+        message: "No parties found.",
+      });
+    }
+
+    return sendSuperJson(res, 200, {
+      success: true,
+      message: "Fetched all parties successfully.",
+      data: parties,
+    });
+  } catch (error) {
+    console.error("Error fetching parties:", error);
+    return sendSuperJson(res, 500, {
+      success: false,
+      message: "An error occurred while fetching parties.",
+    });
+  }
+});
+
 partyRouter.get("/fetch/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -18,33 +43,6 @@ partyRouter.get("/fetch/:id", async (req, res) => {
       .json({ status: false, message: "Failed to find party", error });
   }
 });
-
-partyRouter.get("/fetch/all", async (_, res) => {
-  try {
-      const parties = await getAllParties();
-
-      if (!parties || !parties.length) {
-          return sendSuperJson(res, 404, {
-              success: false,
-              message: "No parties found.",
-          });
-      }
-
-      return sendSuperJson(res, 200, {
-          success: true,
-          message: "Fetched all parties successfully.",
-          data: parties,
-      });
-
-  } catch (error) {
-      console.error("Error fetching parties:", error);
-      return sendSuperJson(res, 500, {
-          success: false,
-          message: "An error occurred while fetching parties.",
-      });
-  }
-});
- 
 
 partyRouter.post("/create", async (req, res): Promise<any> => {
   try {
@@ -68,12 +66,12 @@ partyRouter.post("/create", async (req, res): Promise<any> => {
       return sendSuperJson(res, 400, {
         success: false,
         message: "Zod error",
-      })
+      });
     }
     return sendSuperJson(res, 500, {
       success: false,
       message: "Internal server error.",
-    })
+    });
   }
 });
 
