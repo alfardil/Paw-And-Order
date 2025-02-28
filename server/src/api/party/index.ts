@@ -20,8 +20,30 @@ partyRouter.get("/fetch/:id", async (req, res) => {
 });
 
 partyRouter.get("/fetch/all", async (_, res) => {
-  // TODO: IMPLEMENT THIS
-})
+  try {
+      const parties = await getAllParties();
+
+      if (!parties) {
+          return sendSuperJson(res, 404, {
+              success: false,
+              message: "No parties found.",
+          });
+      }
+
+      return sendSuperJson(res, 200, {
+          success: true,
+          message: "Fetched all parties successfully.",
+          data: parties,
+      });
+
+  } catch (error) {
+      console.error("Error fetching parties:", error);
+      return sendSuperJson(res, 500, {
+          success: false,
+          message: "An error occurred while fetching parties.",
+      });
+  }
+});
  
 
 partyRouter.post("/create", async (req, res): Promise<any> => {

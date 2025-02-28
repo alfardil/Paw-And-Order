@@ -4,10 +4,12 @@ import { ApiResponse } from "../../../lib/apiResponse";
 import superjson from "superjson";
 
 export const useFetchAllPartiesQuery = () => {
-    return useQuery({
+    const query = useQuery({
         queryKey: ["party", "fetch"],
         queryFn: fetchParties,
     });
+
+    return query;
 }
 
 export async function fetchParties() {
@@ -17,8 +19,10 @@ export async function fetchParties() {
         throw new Error("Failed to fetch all parties");
     }
 
-    const data = superjson.parse(await res.text()) as ApiResponse<unknown>;
-    return {success: data.success, data: data}
+    const parsed = superjson.parse(await res.text()) as ApiResponse<{
+        parties: Party[];
+    }>;
+    return parsed;
 }
 
 
@@ -31,7 +35,7 @@ export const useFindPartyQuery = (partyId: string) => {
 
 
 export async function findParty(partyId: string) {
-    const res = await fetch(`/api/party/find/${partyId}`, {method: "GET"});
+    const res = await fetch(`/api/party/fetch/${partyId}`, {method: "GET"});
 
     if (!res.ok) {
         throw new Error("Failed to find party");

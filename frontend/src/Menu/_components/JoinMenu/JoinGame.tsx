@@ -1,18 +1,37 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFetchAllPartiesQuery } from "./hooks";
+import { Loader } from "../ui/Loader";
+import { Party } from "shared/db";
 
 function JoinGame() {
   const [joinCode, setJoinCode] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const { data: parties = [] } = useFetchAllPartiesQuery();
+  const { data: json, isPending, refetch } = useFetchAllPartiesQuery();
+  if (error) {
+    return (
+      <div>
+        <h2>Error: {error}</h2>
+        <button onClick={() => refetch()}>Retry</button>
+      </div>
+    );
+  }
+  if (isPending) {
+    return <Loader />;
+  }
+  if (!json || !("data" in json)) {
+    setError("Failed to fetch parties");
+    return;
+  }
+
+  const parties = json.data.parties;
 
   const handleJoinParty = async (id: string) => {
     setError("");
 
-    const matchingParty = parties.find((party) => party.id === id);
+    const matchingParty = parties.find((party: Party) => party.id === id);
 
     if (!matchingParty) {
       setError("Court not found");
