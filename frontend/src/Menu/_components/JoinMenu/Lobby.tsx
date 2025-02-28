@@ -1,13 +1,14 @@
 import { Link, useParams } from "react-router-dom";
 import StartGame from "./StartGame";
 import { useFindPartyQuery } from "./hooks";
+import { Loader } from "../ui/Loader";
 
 interface ParamTypes {
   [key: string]: string | undefined;
   joinedPartyId: string;
 }
 
-function Lobby() {
+const Lobby = () => {
   const { joinedPartyId: joinedPartyId } = useParams<ParamTypes>();
 
   if (!joinedPartyId) {
@@ -18,14 +19,25 @@ function Lobby() {
       </div>
     );
   }
+
   const partyId = joinedPartyId.trim();
-  const { data: party } = useFindPartyQuery(partyId);
+  console.log(partyId);
+  const { data: party, error, isPending } = useFindPartyQuery(partyId);
+
+  if (isPending) return <Loader />;
+  if (!party) {
+    return (
+      <div>
+        <h2>Error:{(error as Error).message}</h2>
+      </div>
+    );
+  }
 
   if (!party) {
     return (
       <div className="game-container">
         <h2>Room not found</h2>
-        <Link to="/">Back to Home</Link>
+        <Link to="/">NO PARTY FOUND</Link>
       </div>
     );
   }
@@ -60,16 +72,16 @@ function Lobby() {
         <h2>Prompt: {party.prompt}</h2>
         <h3>Users in this room:</h3>
         <ul>
-          {party.users.map((user: any) => (
+          {party.users?.map((user: any) => (
             <li key={user.uuid}>
               {user.firstName} ({user.authProvider}) {user.uuid}
             </li>
           ))}
         </ul>
-        {party.users.length >= 2 && <StartGame party={party} />}
+        {(party.users ?? []).length >= 2 && <StartGame party={party} />}
       </div>
     </div>
   );
-}
+};
 
 export default Lobby;

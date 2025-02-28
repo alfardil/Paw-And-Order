@@ -23,7 +23,7 @@ partyRouter.get("/fetch/all", async (_, res) => {
   try {
       const parties = await getAllParties();
 
-      if (!parties) {
+      if (!parties || !parties.length) {
           return sendSuperJson(res, 404, {
               success: false,
               message: "No parties found.",

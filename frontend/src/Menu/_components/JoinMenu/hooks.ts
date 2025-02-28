@@ -19,15 +19,13 @@ export async function fetchParties() {
         throw new Error("Failed to fetch all parties");
     }
 
-    const parsed = superjson.parse(await res.text()) as ApiResponse<{
-        parties: Party[];
-    }>;
+    const parsed = superjson.parse(await res.text()) as Party[];
     return parsed;
 }
 
 
 export const useFindPartyQuery = (partyId: string) => {
-    return useQuery<Party>({
+    return useQuery({
         queryKey: ["party", "find", partyId],
         queryFn: () => findParty(partyId),
     });
@@ -41,6 +39,6 @@ export async function findParty(partyId: string) {
         throw new Error("Failed to find party");
     }
 
-    const json = await res.json();
-    return json;
+    const parsed = superjson.parse(await res.text()) as Party;
+    return parsed;
 }

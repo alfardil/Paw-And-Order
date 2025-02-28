@@ -82,7 +82,7 @@ function CreateGame() {
     mutate(parseResult.data, {
       onSuccess: (data) => {
         if (data.success) {
-          navigate(`/game/${payload.id}`);
+          navigate(`/party/find/${payload.id}`);
         }
       },
     });

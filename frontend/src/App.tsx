@@ -18,7 +18,7 @@ function AppRoutes() {
 
       <Route path="/join" element={<JoinGame />} />
       <Route path="/party/create" element={<CreateGame />} />
-      <Route path="/game/:partyId" element={<PlayGame />} />
+      <Route path="/play/game/:partyId" element={<PlayGame />} />
       <Route path="/party/find/:joinedPartyId" element={<Lobby />} />
       <Route path="/gameReport" element={<GameReport />} />
       <Route path="*" element={<NotFound />} />

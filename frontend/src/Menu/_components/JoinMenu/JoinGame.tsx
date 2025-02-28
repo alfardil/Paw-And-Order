@@ -26,7 +26,7 @@ function JoinGame() {
     return;
   }
 
-  const parties = json.data.parties;
+  const parties = json;
 
   const handleJoinParty = async (id: string) => {
     setError("");
