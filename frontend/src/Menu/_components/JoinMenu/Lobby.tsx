@@ -21,23 +21,32 @@ const Lobby = () => {
   }
 
   const partyId = joinedPartyId.trim();
-  console.log(partyId);
-  const { data: party, error, isPending } = useFindPartyQuery(partyId);
+  const { data, error, isPending } = useFindPartyQuery(partyId);
 
   if (isPending) return <Loader />;
-  if (!party) {
+
+  if (error) {
     return (
-      <div>
-        <h2>Error:{(error as Error).message}</h2>
+      <div className="game-container">
+        <h2>Something went wrong, please try again.</h2>
       </div>
     );
   }
 
+  if (!data?.success) {
+    return (
+      <div className="game-container">
+        <h2>Error: {data?.message}</h2>
+      </div>
+    );
+  }
+
+  const party = data.data;
+
   if (!party) {
     return (
       <div className="game-container">
-        <h2>Room not found</h2>
-        <Link to="/">NO PARTY FOUND</Link>
+        <h2>Error:{(error as unknown as Error).message}</h2>
       </div>
     );
   }
@@ -74,11 +83,12 @@ const Lobby = () => {
         <ul>
           {party.users?.map((user: any) => (
             <li key={user.uuid}>
-              {user.firstName} ({user.authProvider}) {user.uuid}
+              {user.firstName} <br></br>
+              {user.uuid}
             </li>
           ))}
         </ul>
-        {(party.users ?? []).length >= 2 && <StartGame party={party} />}
+        {party.users.length >= 2 && <StartGame party={party} />}
       </div>
     </div>
   );

@@ -24,7 +24,7 @@ function Auth() {
       {json.success ? (
         <div>
           <p>
-            Welcome,{" "}
+            Welcome,{json.data.user.firstName} {json.data.user.lastName}
             <strong>{json.data.user.email || json.data.user.uuid}</strong>
           </p>
           <Logout />

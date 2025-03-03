@@ -17,8 +17,7 @@ async function postCreateParty(partyData: Party) {
    return {success: false}
   }
   
-  const data = superjson.parse(await res.text()) as ApiResponse<unknown>;
-  console.log("Superjson parsed this:" , data)
+  const data = superjson.parse(await res.text()) as ApiResponse<Party>;
   return { success: data.success, data: data};
 }
 

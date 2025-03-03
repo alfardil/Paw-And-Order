@@ -40,4 +40,13 @@ export const partySchema = z.object({
     .default([]).optional(),
 });
 
+
+export const joinPartySchema = z.object({
+  partyId: z.string().uuid(),
+  userId: z.string().uuid(),
+});
+
+
+
 export type Party = z.infer<typeof partySchema>;
+export type JoinParty = z.infer<typeof joinPartySchema>;

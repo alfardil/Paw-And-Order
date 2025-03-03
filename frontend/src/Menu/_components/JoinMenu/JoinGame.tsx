@@ -1,64 +1,66 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useFetchAllPartiesQuery } from "./hooks";
+import { useFetchAllPartiesQuery, useUpdatePartyMutation } from "./hooks";
 import { Loader } from "../ui/Loader";
 import { Party } from "shared/db";
 
 function JoinGame() {
   const [joinCode, setJoinCode] = useState("");
-  const [error, setError] = useState("");
+  const [err, setErr] = useState("");
   const navigate = useNavigate();
 
-  const { data: json, isPending, refetch } = useFetchAllPartiesQuery();
+  const { data, error, isPending, refetch } = useFetchAllPartiesQuery();
+  const { mutate } = useUpdatePartyMutation();
+
   if (error) {
     return (
       <div>
-        <h2>Error: {error}</h2>
+        <h2>Couldn't get all the parties!</h2>
         <button onClick={() => refetch()}>Retry</button>
       </div>
     );
   }
+
   if (isPending) {
     return <Loader />;
   }
-  if (!json || !("data" in json)) {
-    setError("Failed to fetch parties");
-    return;
-  }
 
-  const parties = json;
+  if (!data.success) {
+    return <h2>No parties found</h2>;
+  }
+  const parties = data.data;
 
   const handleJoinParty = async (id: string) => {
-    setError("");
+    setErr("");
 
     const matchingParty = parties.find((party: Party) => party.id === id);
 
     if (!matchingParty) {
-      setError("Court not found");
+      setErr("Court not found");
       return;
     } else if (matchingParty.isFull) {
-      setError("Court is full");
+      setErr("Court is full");
       return;
     } else if (matchingParty.started) {
-      setError("Court is already started");
+      setErr("Court is already started");
       return;
     }
 
+    mutate(id);
     navigate(`/party/find/${matchingParty.id}`);
   };
 
   const handleJoin = () => {
     if (!joinCode.trim()) {
-      setError("Invalid court code");
+      setErr("Invalid court code");
       return;
     }
     const matchingParty = parties.find((party) => party.roomCode === joinCode);
 
     if (!matchingParty) {
-      setError("Court not found");
+      setErr("Court not found");
       return;
     }
-
     handleJoinParty(matchingParty.id);
   };
 
@@ -111,7 +113,7 @@ function JoinGame() {
             </div>
             <div className="button-glow"></div>
           </button>
-          {error}
+          {err}
           <div className="menu-divider">
             <div className="divider-line"></div>
             <div className="divider-diamond"></div>

@@ -1,28 +1,6 @@
 import { db } from "..";
 import { Party } from "shared/db";
 
-export const getAllParties = async () => {
-  try {
-    return await db.party.findMany();
-  }
-  catch (error) {
-    console.error("Function couldn't get all parties", error);
-    return null;
-  }
-};
-
-export const findParty = async (id: string) => {
-  try {
-    return await db.party.findUnique({
-      where: { id },
-      include: {users: true}
-    });
-  }
-  catch (error) {
-    console.error("Function couldn't find the party", error);
-    return null;
-  }
-}
 
 export type PartyInput = Party & {
   users?: string[];
@@ -104,5 +82,72 @@ export const createParty = async (data: PartyInput): Promise<Party> => {
   catch (error) {
     console.error("Function couldn't create the party", error);
     throw new Error("Failed to create party");
+  }
+};
+
+export const getAllParties = async () => {
+  try {
+    return await db.party.findMany();
+  }
+  catch (error) {
+    console.error("Function couldn't get all parties", error);
+    return null;
+  }
+};
+
+export const findParty = async (id: string) => {
+  try {
+    return await db.party.findUnique({
+      where: { id },
+      include: {users: true, reports: true, feedbacks: true},
+    });
+  }
+  catch (error) {
+    console.error("Function couldn't find the party", error);
+    return null;
+  }
+};
+
+export const updateParty = async (
+  partyId: string,
+  currentUserId: string,
+  data: Partial<PartyInput> = {}
+) => {
+  try {
+    return await db.party.update({
+      where: { id: partyId },
+      data: {
+        ...data,
+        
+        users: {
+          connect: { uuid: currentUserId }
+        },
+        reports: data.reports
+          ? {
+              set: [],
+              create: data.reports.map((report) => ({
+                id: report.id,
+                createdAt: report.createdAt,
+                message: report.message,
+                userUuid: report.userUuid,
+              })),
+            }
+          : undefined,
+        feedbacks: data.feedbacks
+          ? {
+              set: [],
+              create: data.feedbacks.map((feedback) => ({
+                id: feedback.id,
+                createdAt: feedback.createdAt,
+                content: feedback.content,
+                userUuid: feedback.userUuid,
+              })),
+            }
+          : undefined,
+      },
+    });
+  } catch (error) {
+    console.error("Function couldn't update the party", error);
+    throw new Error("Failed to update the party");
   }
 };

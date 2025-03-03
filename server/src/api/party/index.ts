@@ -1,6 +1,5 @@
-import { createParty, findParty, getAllParties } from "@/lib/db";
+import { createParty, findParty, getAllParties, updateParty } from "@/lib/db";
 import { sendSuperJson } from "@/lib/superjson-sender";
-import { attempt } from "@/validation/attempt";
 import { partySchema } from "@/validation/party.schema";
 import { Router } from "express";
 import { z } from "zod";
@@ -36,11 +35,9 @@ partyRouter.get("/fetch/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const party = await findParty(id);
-    res.status(200).json(party);
+    return sendSuperJson(res, 200, { data: party, success: true, message: "Fetched party"})
   } catch (error) {
-    res
-      .status(500)
-      .json({ status: false, message: "Failed to find party", error });
+    return sendSuperJson(res, 500, { success: false, message: "An error occurred while fetching party." });
   }
 });
 
@@ -75,13 +72,42 @@ partyRouter.post("/create", async (req, res): Promise<any> => {
   }
 });
 
-partyRouter.get("/find", async (_, res) => {
+partyRouter.post("/join/:partyId", async (req, res) => {
   try {
-    const parties = await getAllParties();
-    res.status(200).json(parties);
+    const user = res.locals.user;
+    
+    if (!user) {
+      return sendSuperJson(res, 401, { success: false, message: "You are not authenticated." });
+    }
+
+    const {partyId} = req.params;
+    const userId = user.uuid;
+
+    const party = await findParty(partyId);
+    if (!party) {
+      return sendSuperJson(res, 404, { success: false, message: "Party not found." });
+    }
+    
+    if (!userId) {
+      return sendSuperJson(res, 400, { success: false, message: "User ID is required." });
+    }
+
+    const updatedParty = await updateParty(partyId, userId, {});
+
+    if (!updatedParty) {
+      return sendSuperJson(res, 500, { success: false, message: "Failed to update party." });
+    }
+
+    return sendSuperJson(res, 200, 
+      { data: updatedParty, 
+        success: true, 
+        message: "Updated party"
+      })
   } catch (error) {
-    res
-      .status(500)
-      .json({ status: false, message: "Failed to fetch parties", error });
+
+    return sendSuperJson(res, 500, { 
+      success: false, 
+      message: "An error occurred while updating party." 
+    });
   }
-});
+})

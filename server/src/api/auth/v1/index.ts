@@ -127,6 +127,8 @@ authRouterV1.get("/google/callback", async (req, res) => {
 
   const googleId = claims.sub;
   const email = claims.email;
+  const firstName = claims.given_name;
+  const lastName = claims.family_name;
 
   const [existingUserError, existingUser] = await attempt(
     getUserWithGoogleId({ googleId }),
@@ -139,7 +141,7 @@ authRouterV1.get("/google/callback", async (req, res) => {
   let user: User;
   if (!existingUser) {
     const [newUserError, newUser] = await attempt(
-      createGoogleUser({ email, googleId }),
+      createGoogleUser({ email, googleId, firstName, lastName }),
     );
 
     if (newUserError || newUser === null) {

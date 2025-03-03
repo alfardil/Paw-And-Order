@@ -13,7 +13,7 @@ export const partySchema = z.object({
   ended: z.coerce.boolean().default(false),
   isFull: z.coerce.boolean().default(false),
 
-  users: z.array(z.string()).default([]).optional(),
+  users: z.array(z.string()).default([]),
 
   reports: z
     .array(
@@ -26,7 +26,7 @@ export const partySchema = z.object({
         userUuid: z.string(),
       })
     )
-    .default([]).optional(),
+    .default([]),
 
   feedbacks: z
     .array(
@@ -37,7 +37,7 @@ export const partySchema = z.object({
         userUuid: z.string(),
       })
     )
-    .default([]).optional(),
+    .default([])
 });
 
 export type Party = z.infer<typeof partySchema>;
