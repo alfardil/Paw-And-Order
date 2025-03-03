@@ -14,8 +14,8 @@ function JoinGame() {
 
   if (error) {
     return (
-      <div>
-        <h2>Couldn't get all the parties!</h2>
+      <div className="game-container">
+        <h2>There are no parties currently available!</h2>
         <button onClick={() => refetch()}>Retry</button>
       </div>
     );
@@ -26,8 +26,9 @@ function JoinGame() {
   }
 
   if (!data.success) {
-    return <h2>No parties found</h2>;
+    return <h2 className="game-container">No parties found</h2>;
   }
+
   const parties = data.data;
 
   const handleJoinParty = async (id: string) => {
