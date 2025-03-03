@@ -58,6 +58,7 @@ export async function updateParty(partyId: string) {
     const res = await fetch(`/api/party/join/${partyId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: superjson.stringify(partyId),
     });
 
     if (!res.ok) {

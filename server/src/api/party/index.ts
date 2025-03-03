@@ -92,7 +92,7 @@ partyRouter.post("/join/:partyId", async (req, res) => {
       return sendSuperJson(res, 400, { success: false, message: "User ID is required." });
     }
 
-    const updatedParty = await updateParty(partyId, userId, {});
+    const updatedParty = await updateParty(partyId, userId);
 
     if (!updatedParty) {
       return sendSuperJson(res, 500, { success: false, message: "Failed to update party." });

@@ -108,46 +108,63 @@ export const findParty = async (id: string) => {
   }
 };
 
-export const updateParty = async (
-  partyId: string,
-  currentUserId: string,
-  data: Partial<PartyInput> = {}
-) => {
+export const updateParty = async (partyId: string, currentUserId: string) => {
   try {
     return await db.party.update({
       where: { id: partyId },
       data: {
-        ...data,
-        
         users: {
-          connect: { uuid: currentUserId }
+          connect: { uuid: currentUserId },
         },
-        reports: data.reports
-          ? {
-              set: [],
-              create: data.reports.map((report) => ({
-                id: report.id,
-                createdAt: report.createdAt,
-                message: report.message,
-                userUuid: report.userUuid,
-              })),
-            }
-          : undefined,
-        feedbacks: data.feedbacks
-          ? {
-              set: [],
-              create: data.feedbacks.map((feedback) => ({
-                id: feedback.id,
-                createdAt: feedback.createdAt,
-                content: feedback.content,
-                userUuid: feedback.userUuid,
-              })),
-            }
-          : undefined,
       },
     });
   } catch (error) {
-    console.error("Function couldn't update the party", error);
+    console.error("Failed to update the party:", error);
     throw new Error("Failed to update the party");
   }
 };
+
+
+// export const updateParty = async (
+//   partyId: string,
+//   currentUserId: string,
+//   data: Partial<PartyInput> = {}
+// ) => {
+//   try {
+//     return await db.party.update({
+//       where: { id: partyId },
+//       data: {
+//         ...data,
+        
+//         users: {
+//           connect: { uuid: currentUserId }
+//         },
+//         reports: data.reports
+//           ? {
+//               set: [],
+//               create: data.reports.map((report) => ({
+//                 id: report.id,
+//                 createdAt: report.createdAt,
+//                 message: report.message,
+//                 userUuid: report.userUuid,
+//               })),
+//             }
+//           : undefined,
+//         feedbacks: data.feedbacks
+//           ? {
+//               set: [],
+//               create: data.feedbacks.map((feedback) => ({
+//                 id: feedback.id,
+//                 createdAt: feedback.createdAt,
+//                 content: feedback.content,
+//                 userUuid: feedback.userUuid,
+//               })),
+//             }
+//           : undefined,
+//       },
+//     });
+//   } catch (error) {
+//     console.error("Function couldn't update the party", error);
+//     throw new Error("Failed to update the party");
+//   }
+// };
