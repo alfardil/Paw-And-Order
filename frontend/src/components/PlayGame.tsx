@@ -1,7 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import "../App.css";
 import { useEffect, useRef, useState } from "react";
-import { Party, mockUsers } from "../mockData";
+import { mockUsers } from "../mockData";
+import { Party } from "../validation/party.schema";
 
 function PlayGame() {
   const location = useLocation();
@@ -12,15 +13,18 @@ function PlayGame() {
   const [countdown, setCountdown] = useState(30);
   const [isListening, setIsListening] = useState(false);
   const [transcription, setTranscription] = useState<string[]>(
-    Array(party.userIds.length * 2).fill("")
+    Array(party.users.length * 2).fill("")
   );
   const [phase, setPhase] = useState<"response" | "refutation">("response");
 
-  const players = party.userIds;
-  const currentUser = mockUsers.find(
-    (user) => user.userId === players[currentTurn % players.length]
+  const players = party.users;
+
+  const currentUserTurn = party.users.find(
+    (user) => user.uuid === players[currentTurn % players.length]
   );
-  const currentPlayerName = currentUser ? currentUser.name : "Unknown Player";
+  const currentPlayerName = currentUserTurn
+    ? currentUserTurn.name
+    : "Unknown Player";
 
   const isListeningRef = useRef(isListening);
   useEffect(() => {
@@ -136,7 +140,7 @@ function PlayGame() {
 
       <div className="countdown-display">{countdown}</div>
 
-      {players[currentTurn % players.length] === currentUser?.userId && (
+      {players[currentTurn % players.length] === currentUserTurn?.uuid && (
         <button
           className="microphone-button"
           onClick={() => setIsListening(!isListening)}
@@ -148,7 +152,7 @@ function PlayGame() {
       <div className="transcription-container">
         <h3 className="response-title">💬 Responses:</h3>
         {players.map((playerId, index) => {
-          const player = mockUsers.find((user) => user.userId === playerId);
+          const player = mockUsers.find((user) => user.uuid === playerId);
           return (
             <p key={playerId} className="opponent-response">
               <strong>{player?.name}:</strong> {transcription[index]}
@@ -158,7 +162,7 @@ function PlayGame() {
 
         <h3 className="response-title">🔄 Refutations:</h3>
         {players.map((playerId, index) => {
-          const player = mockUsers.find((user) => user.userId === playerId);
+          const player = mockUsers.find((user) => user.uuid === playerId);
           return (
             <p key={playerId} className="opponent-response">
               <strong>{player?.name}:</strong>

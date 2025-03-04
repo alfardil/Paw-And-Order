@@ -12,7 +12,7 @@ const StartGame = ({ party }: StartGameProps) => {
   const playerCount = party.users.length;
 
   const handleStartGame = () => {
-    navigate(`/game/${party.id}`, { state: { party } });
+    navigate(`/play/game/${party.id}`, { state: { party } });
   };
 
   useEffect(() => {
