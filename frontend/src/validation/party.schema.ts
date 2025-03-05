@@ -13,16 +13,26 @@ export const partySchema = z.object({
   ended: z.coerce.boolean().default(false),
   isFull: z.coerce.boolean().default(false),
 
-  users: z.array(z.string()).default([]),
+  users: z
+    .array(
+      z.object({
+        uuid: z.string(),
+        joinedAt: z.coerce.date().default(() => new Date()),
+        googleId: z.string(),
+        firstName: z.string(),
+        lastName: z.string(),
+        email: z.string(),
+        authProvider: z.string(),
+      })
+    )
+    .default([]),
 
   reports: z
     .array(
       z.object({
         id: z.string(),
         createdAt: z.coerce.date().default(() => new Date()),
-
         message: z.string(),
-
         userUuid: z.string(),
       })
     )

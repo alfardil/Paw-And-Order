@@ -1,13 +1,30 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import "../App.css";
 import { useEffect, useRef, useState } from "react";
-import { mockUsers } from "../mockData";
-import { Party } from "../validation/party.schema";
+import { useFetchAuthQuery } from "../Menu/_components/auth/hooks";
+import { Loader } from "../Menu/_components/ui/Loader";
+import { Party } from "shared/db";
 
 function PlayGame() {
   const location = useLocation();
   const navigate = useNavigate();
   const party: Party = location.state?.party;
+  const { data: json, error, isPending, refetch } = useFetchAuthQuery();
+
+  if (error || !json?.success) {
+    return (
+      <div>
+        <h2>Error: {(error as Error).message}</h2>
+        <button onClick={() => refetch()}>Retry</button>
+      </div>
+    );
+  }
+
+  if (isPending) {
+    return <Loader />;
+  }
+
+  const player = json.data.user;
 
   const [currentTurn, setCurrentTurn] = useState(0);
   const [countdown, setCountdown] = useState(30);
@@ -22,6 +39,7 @@ function PlayGame() {
   const currentUserTurn = party.users.find(
     (user) => user.uuid === players[currentTurn % players.length]
   );
+
   const currentPlayerName = currentUserTurn
     ? currentUserTurn.name
     : "Unknown Player";
@@ -140,7 +158,7 @@ function PlayGame() {
 
       <div className="countdown-display">{countdown}</div>
 
-      {players[currentTurn % players.length] === currentUserTurn?.uuid && (
+      {players[currentTurn % players.length] === currentUserTurn && (
         <button
           className="microphone-button"
           onClick={() => setIsListening(!isListening)}

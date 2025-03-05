@@ -7,7 +7,7 @@ function GameReport() {
   const transcription: string[] = location.state?.transcription;
 
   return (
-    <div>
+    <div className="game-container">
       <h1>Game Report</h1>
       <p>This is the game report.</p>
     </div>

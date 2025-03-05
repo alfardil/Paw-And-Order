@@ -25,11 +25,13 @@ export const createGoogleUser = async ({
   googleId,
   firstName,
   lastName,
+  authProvider,
 }: {
   email?: string;
   googleId?: string;
   firstName?: string;
   lastName?: string;
+  authProvider?: string;
 }) => {
   try {
     return await db.user.create({
@@ -37,7 +39,8 @@ export const createGoogleUser = async ({
         googleId,
         email,
         firstName,
-        lastName
+        lastName,
+        authProvider
       },
     });
   } catch {

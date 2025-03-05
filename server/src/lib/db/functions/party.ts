@@ -3,7 +3,15 @@ import { Party } from "shared/db";
 
 
 export type PartyInput = Party & {
-  users?: string[];
+  users?: {
+    uuid: string;
+    authProvider: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    googleId: string;
+    joinedAt: Date;
+  }[];
   reports?: {
     id?: string;
     createdAt: Date;
@@ -47,7 +55,22 @@ export const createParty = async (data: PartyInput): Promise<Party> => {
         ended,
         isFull,
         
-        users: users?.length ? {connect: users.map((uuid) => ({uuid}))} : undefined,
+        users: users?.length
+        ? {
+            connectOrCreate: users.map((user) => ({
+              where: { uuid: user.uuid },
+              create: {
+                uuid: user.uuid,
+                authProvider: user.authProvider,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                googleId: user.googleId,
+                joinedAt: user.joinedAt,
+              },
+            })),
+          }
+        : undefined,
 
         reports: reports?.length
           ? {

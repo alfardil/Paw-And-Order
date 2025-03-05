@@ -53,7 +53,7 @@ function CreateGame() {
       started: false,
       ended: false,
       isFull: false,
-      users: [user.uuid],
+      users: [user],
       reports: [
         {
           id: crypto.randomUUID(),
@@ -78,6 +78,7 @@ function CreateGame() {
       console.log(parseResult.error);
       return;
     }
+    console.log("Client side validation passed!");
 
     mutate(parseResult.data, {
       onSuccess: (data) => {
