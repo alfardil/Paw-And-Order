@@ -3,7 +3,7 @@ import "../App.css";
 import { useEffect, useRef, useState } from "react";
 import { useFetchAuthQuery } from "../Menu/_components/auth/hooks";
 import { Loader } from "../Menu/_components/ui/Loader";
-import { Party } from "shared/db";
+import { Party } from "../validation/party.schema";
 
 function PlayGame() {
   const location = useLocation();
@@ -11,50 +11,45 @@ function PlayGame() {
   const party: Party = location.state?.party;
   const { data: json, error, isPending, refetch } = useFetchAuthQuery();
 
-  if (error || !json?.success) {
+  if (isPending) return <Loader />;
+  if (error || !json?.success)
     return (
       <div>
-        <h2>Error: {(error as Error).message}</h2>
+        <h2>Error:</h2>
         <button onClick={() => refetch()}>Retry</button>
       </div>
     );
-  }
 
-  if (isPending) {
-    return <Loader />;
-  }
-
-  const player = json.data.user;
+  const thisPlayer = json.data.user;
+  const players = party.users;
+  const numPlayers = players.length;
 
   const [currentTurn, setCurrentTurn] = useState(0);
   const [countdown, setCountdown] = useState(30);
+  const [phase, setPhase] = useState<"response" | "refutation">("response");
   const [isListening, setIsListening] = useState(false);
   const [transcription, setTranscription] = useState<string[]>(
-    Array(party.users.length * 2).fill("")
+    Array(numPlayers * 2).fill("")
   );
-  const [phase, setPhase] = useState<"response" | "refutation">("response");
-
-  const players = party.users;
-
-  const currentUserTurn = party.users.find(
-    (user) => user.uuid === players[currentTurn % players.length]
-  );
-
-  const currentPlayerName = currentUserTurn
-    ? currentUserTurn.name
-    : "Unknown Player";
 
   const isListeningRef = useRef(isListening);
+
   useEffect(() => {
     isListeningRef.current = isListening;
   }, [isListening]);
 
+  const currentPlayer = players[currentTurn % numPlayers];
+  const currentPlayerName = currentPlayer
+    ? currentPlayer.firstName
+    : "Unknown Player";
+  const isCurrentUserTurn = thisPlayer.uuid === currentPlayer.uuid;
+
   useEffect(() => {
     if (countdown <= 0) {
-      if (phase === "response" && currentTurn === players.length - 1) {
+      if (phase === "response" && currentTurn === numPlayers - 1) {
         setPhase("refutation");
         setCurrentTurn(0);
-      } else if (phase === "refutation" && currentTurn === players.length - 1) {
+      } else if (phase === "refutation" && currentTurn === numPlayers - 1) {
         navigate("/gameReport", { state: { party, transcription } });
         return;
       } else {
@@ -64,10 +59,10 @@ function PlayGame() {
       setCountdown(30);
     }
 
-    const timer = setInterval(() => {
-      setCountdown((prev) => (prev > 0 ? prev - 1 : prev));
-    }, 1000);
-
+    const timer = setInterval(
+      () => setCountdown((prev) => Math.max(prev - 1, 0)),
+      1000
+    );
     return () => clearInterval(timer);
   }, [
     countdown,
@@ -76,9 +71,10 @@ function PlayGame() {
     navigate,
     party,
     transcription,
-    players.length,
+    numPlayers,
   ]);
 
+  // speech recog
   useEffect(() => {
     if (!("webkitSpeechRecognition" in window)) return;
 
@@ -103,7 +99,7 @@ function PlayGame() {
       }
 
       if (finalSegment) {
-        const indexOffset = phase === "refutation" ? players.length : 0;
+        const indexOffset = phase === "refutation" ? numPlayers : 0;
         setTranscription((prev) => {
           const updated = [...prev];
           updated[currentTurn + indexOffset] =
@@ -114,9 +110,7 @@ function PlayGame() {
     };
 
     recognition.onend = () => {
-      if (debounceTimeout) {
-        clearTimeout(debounceTimeout);
-      }
+      if (debounceTimeout) clearTimeout(debounceTimeout);
       if (isListeningRef.current) {
         debounceTimeout = setTimeout(() => {
           if (isListeningRef.current) {
@@ -130,14 +124,11 @@ function PlayGame() {
       }
     };
 
-    if (isListening) {
-      recognition.start();
-    } else {
-      recognition.stop();
-    }
+    if (isListening) recognition.start();
+    else recognition.stop();
 
     return () => recognition.abort();
-  }, [isListening, currentTurn]);
+  }, [isListening, currentTurn, numPlayers, phase]);
 
   return (
     <div className="game-container">
@@ -158,7 +149,7 @@ function PlayGame() {
 
       <div className="countdown-display">{countdown}</div>
 
-      {players[currentTurn % players.length] === currentUserTurn && (
+      {isCurrentUserTurn && (
         <button
           className="microphone-button"
           onClick={() => setIsListening(!isListening)}
@@ -169,25 +160,19 @@ function PlayGame() {
 
       <div className="transcription-container">
         <h3 className="response-title">💬 Responses:</h3>
-        {players.map((playerId, index) => {
-          const player = mockUsers.find((user) => user.uuid === playerId);
-          return (
-            <p key={playerId} className="opponent-response">
-              <strong>{player?.name}:</strong> {transcription[index]}
-            </p>
-          );
-        })}
+        {players.map((user, index) => (
+          <p key={user.uuid} className="opponent-response">
+            <strong>{user.firstName}:</strong> {transcription[index]}
+          </p>
+        ))}
 
         <h3 className="response-title">🔄 Refutations:</h3>
-        {players.map((playerId, index) => {
-          const player = mockUsers.find((user) => user.uuid === playerId);
-          return (
-            <p key={playerId} className="opponent-response">
-              <strong>{player?.name}:</strong>
-              {transcription[index + players.length]}
-            </p>
-          );
-        })}
+        {players.map((user, index) => (
+          <p key={user.uuid} className="opponent-response">
+            <strong>{user.firstName}:</strong>{" "}
+            {transcription[index + numPlayers]}
+          </p>
+        ))}
       </div>
     </div>
   );

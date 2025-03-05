@@ -48,6 +48,7 @@ function JoinGame() {
     }
 
     mutate(id);
+    console.log(matchingParty);
     navigate(`/party/find/${matchingParty.id}`);
   };
 
