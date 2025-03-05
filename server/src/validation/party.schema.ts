@@ -19,10 +19,10 @@ export const partySchema = z.object({
         uuid: z.string(),
         joinedAt: z.coerce.date().default(() => new Date()),
         googleId: z.string(),
-        firstName: z.string(),
-        lastName: z.string(),
+        firstName: z.string().nullable(),
+        lastName: z.string().nullable(),
         email: z.string(),
-        authProvider: z.string(),
+        authProvider: z.string().nullable(),
       })
     )
     .default([]),

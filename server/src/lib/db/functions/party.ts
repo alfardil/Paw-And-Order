@@ -5,10 +5,10 @@ import { Party } from "shared/db";
 export type PartyInput = Party & {
   users?: {
     uuid: string;
-    authProvider: string;
+    authProvider: string | null;
     email: string;
-    firstName: string;
-    lastName: string;
+    firstName: string | null;
+    lastName: string | null;
     googleId: string;
     joinedAt: Date;
   }[];
@@ -61,10 +61,10 @@ export const createParty = async (data: PartyInput): Promise<Party> => {
               where: { uuid: user.uuid },
               create: {
                 uuid: user.uuid,
-                authProvider: user.authProvider,
+                authProvider: user.authProvider ?? null,
                 email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
+                firstName: user.firstName ?? null,
+                lastName: user.lastName ?? null,
                 googleId: user.googleId,
                 joinedAt: user.joinedAt,
               },
