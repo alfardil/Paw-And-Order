@@ -7,8 +7,9 @@ import { Party } from "../validation/party.schema";
 
 function PlayGame() {
   const location = useLocation();
-  const navigate = useNavigate();
   const party: Party = location.state?.party;
+
+  const navigate = useNavigate();
   const { data: json, error, isPending, refetch } = useFetchAuthQuery();
 
   if (isPending) return <Loader />;
