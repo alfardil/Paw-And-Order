@@ -3,13 +3,10 @@ import StartGame from "./StartGame";
 import { useFindPartyQuery } from "./hooks";
 import { Loader } from "../ui/Loader";
 
-interface ParamTypes {
-  [key: string]: string | undefined;
-  joinedPartyId: string;
-}
-
 const Lobby = () => {
-  const { joinedPartyId: joinedPartyId } = useParams<ParamTypes>();
+  const { joinedPartyId: joinedPartyId } = useParams() as {
+    joinedPartyId?: string;
+  };
 
   if (!joinedPartyId) {
     return (

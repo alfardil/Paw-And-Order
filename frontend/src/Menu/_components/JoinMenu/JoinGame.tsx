@@ -10,7 +10,7 @@ function JoinGame() {
   const navigate = useNavigate();
 
   const { data, error, isPending, refetch } = useFetchAllPartiesQuery();
-  const { mutate } = useUpdatePartyMutation();
+  const { status, mutate } = useUpdatePartyMutation();
 
   if (error) {
     return (
@@ -48,6 +48,11 @@ function JoinGame() {
     }
 
     mutate(id);
+
+    if (status === "pending") {
+      <Loader />;
+    }
+
     console.log(matchingParty);
     navigate(`/party/find/${matchingParty.id}`);
   };

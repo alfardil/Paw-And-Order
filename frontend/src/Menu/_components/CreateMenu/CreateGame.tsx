@@ -78,7 +78,6 @@ function CreateGame() {
       console.log(parseResult.error);
       return;
     }
-    console.log("Client side validation passed!");
 
     mutate(parseResult.data, {
       onSuccess: (data) => {
