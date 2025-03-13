@@ -2,13 +2,18 @@ import { Link, useParams } from "react-router-dom";
 import StartGame from "./StartGame";
 import { useFindPartyQuery } from "./hooks";
 import { Loader } from "../ui/Loader";
+import { User } from "shared/db";
 
 const Lobby = () => {
   const { joinedPartyId: joinedPartyId } = useParams() as {
     joinedPartyId?: string;
   };
 
-  if (!joinedPartyId) {
+  const partyId = joinedPartyId?.trim();
+
+  const { data, error, isPending } = useFindPartyQuery(partyId || "");
+
+  if (partyId === "") {
     return (
       <div className="game-container">
         <h2>Room ID is missing</h2>
@@ -16,9 +21,6 @@ const Lobby = () => {
       </div>
     );
   }
-
-  const partyId = joinedPartyId.trim();
-  const { data, error, isPending } = useFindPartyQuery(partyId);
 
   if (isPending) return <Loader />;
 
@@ -30,7 +32,7 @@ const Lobby = () => {
     );
   }
 
-  if (!data?.success) {
+  if (!data.success) {
     return (
       <div className="game-container">
         <h2>Error: {data?.message}</h2>
@@ -78,7 +80,7 @@ const Lobby = () => {
         <h2>Prompt: {party.prompt}</h2>
         <h3>Users in this room:</h3>
         <ul>
-          {party.users?.map((user: any) => (
+          {party.users?.map((user: User) => (
             <li key={user.uuid}>
               {user.firstName} <br></br>
               {user.uuid}

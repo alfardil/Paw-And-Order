@@ -10,40 +10,28 @@ function PlayGame() {
   const party: Party = location.state?.party;
 
   const navigate = useNavigate();
-  const { data: json, error, isPending, refetch } = useFetchAuthQuery();
-
-  if (isPending) return <Loader />;
-  if (error || !json?.success)
-    return (
-      <div>
-        <h2>Error:</h2>
-        <button onClick={() => refetch()}>Retry</button>
-      </div>
-    );
-
-  const thisPlayer = json.data.user;
-  const players = party.users;
-  const numPlayers = players.length;
 
   const [currentTurn, setCurrentTurn] = useState(0);
   const [countdown, setCountdown] = useState(30);
   const [phase, setPhase] = useState<"response" | "refutation">("response");
   const [isListening, setIsListening] = useState(false);
   const [transcription, setTranscription] = useState<string[]>(
-    Array(numPlayers * 2).fill("")
+    Array(party?.users.length * 2).fill("")
   );
-
   const isListeningRef = useRef(isListening);
 
-  useEffect(() => {
-    isListeningRef.current = isListening;
-  }, [isListening]);
+  const players = party.users;
+  const numPlayers = players.length;
 
   const currentPlayer = players[currentTurn % numPlayers];
   const currentPlayerName = currentPlayer
     ? currentPlayer.firstName
     : "Unknown Player";
   const isCurrentUserTurn = thisPlayer.uuid === currentPlayer.uuid;
+
+  useEffect(() => {
+    isListeningRef.current = isListening;
+  }, [isListening]);
 
   useEffect(() => {
     if (countdown <= 0) {
@@ -130,6 +118,20 @@ function PlayGame() {
 
     return () => recognition.abort();
   }, [isListening, currentTurn, numPlayers, phase]);
+
+  const { data: json, error, isPending, refetch } = useFetchAuthQuery();
+
+  if (isPending) return <Loader />;
+
+  if (error || !json?.success)
+    return (
+      <div>
+        <h2>Error:</h2>
+        <button onClick={() => refetch()}>Retry</button>
+      </div>
+    );
+
+  const thisPlayer = json.data.user;
 
   return (
     <div className="game-container">

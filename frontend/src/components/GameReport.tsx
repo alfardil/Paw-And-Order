@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { Party } from "../mockData";
+import { Party } from "../validation/party.schema";
 
 function GameReport() {
   const location = useLocation();
@@ -10,6 +10,9 @@ function GameReport() {
     <div className="game-container">
       <h1>Game Report</h1>
       <p>This is the game report.</p>
+
+      <h2>{party.name}</h2>
+      <p>{transcription}</p>
     </div>
   );
 }
