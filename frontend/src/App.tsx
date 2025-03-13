@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import JoinGame from "./Menu/_components/JoinMenu/JoinGame";
 import Lobby from "./Menu/_components/JoinMenu/Lobby";
 import CreateGame from "./Menu/_components/CreateMenu/CreateGame";
-import PlayGame from "./components/PlayGame";
+import PlayGame from "./Play/PlayGame";
 import NotFound from "./components/NotFound";
 import GameReport from "./components/GameReport";
 import Success from "./Menu/_components/auth/success/Success";
